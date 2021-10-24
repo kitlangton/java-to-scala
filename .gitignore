@@ -3,3 +3,11 @@
 node_modules/
 target/
 dist/
+.metals
+.bloop
+project/.metals
+
+.vscode/settings.json
+project/project/project/metals.sbt
+project/project/metals.sbt
+project/metals.sbt

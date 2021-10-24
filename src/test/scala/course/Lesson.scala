@@ -8,3 +8,7 @@ trait Lesson extends DefaultRunnableSpec {
 
   override def spec: ZSpec[TestEnvironment, Any] = exercise
 }
+
+object Lesson {
+  type ???
+}
