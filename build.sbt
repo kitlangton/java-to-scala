@@ -21,6 +21,7 @@ lazy val root = (project in file("."))
       "-Xverify",
       "-Xfatal-warnings",
       "-feature",
-      "-language:_"
+      "-language:_",
+      "-Wconf:cat=unused:info"
     )
   )

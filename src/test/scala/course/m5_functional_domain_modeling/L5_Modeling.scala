@@ -1,4 +1,4 @@
-package course.m1_functional_domain_modeling
+package course.m5_functional_domain_modeling
 
 import course.Lesson
 import course.Lesson.???

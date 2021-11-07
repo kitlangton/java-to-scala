@@ -1,4 +1,4 @@
-package course.m1_functional_domain_modeling
+package course.m5_functional_domain_modeling
 
 import course.Lesson
 import zio.test._
@@ -27,8 +27,8 @@ object L3_PatternMatching extends Lesson {
 
   /** EXERCISE
     *
-    * Use pattern matching to extract out the `postalCode` of `Address`, using a wildcard to ignore (match any)
-    * `street`.
+    * Use pattern matching to extract out the `postalCode` of `Address`, using a
+    * wildcard to ignore (match any) `street`.
     */
   val testWildcard =
     test("wildcard") {
@@ -41,8 +41,9 @@ object L3_PatternMatching extends Lesson {
 
   /** EXERCISE
     *
-    * Using pattern matching on a constant, implement the provided function so that it returns true for any street
-    * matching "221B Baker", regardless of postal code.
+    * Using pattern matching on a constant, implement the provided function so
+    * that it returns true for any street matching "221B Baker", regardless of
+    * postal code.
     */
   val testConstant =
     test("constant") {
@@ -58,8 +59,9 @@ object L3_PatternMatching extends Lesson {
 
   /** EXERCISE
     *
-    * Using multiple ordered case clauses in a pattern match, implement the `neighbor` function such that it returns the
-    * correct `Deduction` based on the given address.
+    * Using multiple ordered case clauses in a pattern match, implement the
+    * `neighbor` function such that it returns the correct `Deduction` based on
+    * the given address.
     */
   val testOrdered =
     test("ordered") {
@@ -90,8 +92,8 @@ object L3_PatternMatching extends Lesson {
 
   /** EXERCISE
     *
-    * Using pattern guards, implement the provided function so that it returns true for any street that contains
-    * "Baker".
+    * Using pattern guards, implement the provided function so that it returns
+    * true for any street that contains "Baker".
     */
   val testPatternGuards =
     test("pattern guards") {
@@ -104,7 +106,8 @@ object L3_PatternMatching extends Lesson {
 
   /** EXERCISE
     *
-    * Using nested patterns, implement the provided function so that it extracts out the postal code of any person.
+    * Using nested patterns, implement the provided function so that it extracts
+    * out the postal code of any person.
     */
 
   val testNested =
@@ -121,15 +124,14 @@ object L3_PatternMatching extends Lesson {
 
   /** EXERCISE
     *
-    * Using stable identifiers, return true if an address street matches the `sherlockStreet` constant.
+    * Using stable identifiers, return true if an address street matches the
+    * `sherlockStreet` constant.
     */
   val testStableIdentifierPattern =
     test("stable identifier pattern") {
       final case class Address(number: String, street: String, postalCode: String)
 
       val sherlockStreet = "Baker"
-
-      val _ = sherlockStreet
 
       def isSherlockStreet(address: Address): Boolean = ???
 
@@ -140,8 +142,8 @@ object L3_PatternMatching extends Lesson {
 
   /** EXERCISE
     *
-    * Use typed patterns to implement the `scan` method, returning the proper ScanResult for the contents of the given
-    * Box.
+    * Use typed patterns to implement the `scan` method, returning the proper
+    * ScanResult for the contents of the given Box.
     */
   val testTypedPattern =
     test("typed pattern") {

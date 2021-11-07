@@ -1,4 +1,4 @@
-package course.m1_functional_domain_modeling
+package course.m5_functional_domain_modeling
 
 /** .___________. __    __   _______         ___      .__   __.      _______.____    __    ____  _______ .______          _______.
   * |           ||  |  |  | |   ____|       /   \     |  \ |  |     /       |\   \  /  \  /   / |   ____||   _  \        /       |
