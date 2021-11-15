@@ -11,15 +11,18 @@ import zio.test._
 // ╚██████╗██║  ██║██║  ██║██████╔╝██║██║ ╚████║██║  ██║███████╗██║   ██║      ██║
 //  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝   ╚═╝      ╚═╝
 
-/** Here we'll ply our knowledge of the "Algebraic" part of Algebraic Data Types, and calculate how many values are
-  * representable by different ADTs. The technical term for the-size-of-a-type is Cardinality. So, in other words, we'll
-  * be counting cardinalities.
+/** Here we'll ply our knowledge of the "Algebraic" part of Algebraic Data
+  * Types, and calculate how many values are representable by different ADTs.
+  * The technical term for the-size-of-a-type is Cardinality. So, in other
+  * words, we'll be counting cardinalities.
   *
-  * Remember that sealed traits (i.e., Sum Types) perform type-level addition, whereas case classes (i.e., Product
-  * Types) perform type-level multiplication. Type parameters create type-level functions of sorts, allowing us to
-  * substitute in (or "apply") the cardinality of another type.
+  * Remember that sealed traits (i.e., Sum Types) perform type-level addition,
+  * whereas case classes (i.e., Product Types) perform type-level
+  * multiplication. Type parameters create type-level functions of sorts,
+  * allowing us to substitute in (or "apply") the cardinality of another type.
   *
-  * If the following formulas don't seem too frightening, then you'll be able to handle the exercises no problem. ;-)
+  * If the following formulas don't seem too frightening, then you'll be able to
+  * handle the exercises no problem. ;-)
   *   - 8
   *   - 2 + 2
   *   - 5 * 5
@@ -30,7 +33,7 @@ import zio.test._
 
 object L4_Cardinality extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * List every possible Boolean value.
     */
@@ -45,7 +48,7 @@ object L4_Cardinality extends Lesson {
     *
     * The cardinality of a set (or type) is simply its size.
     *
-    * EXERCISE
+    * ✏ EXERCISE
     *
     * Change the value from 0 to the actual cardinality of `Boolean`.
     */
@@ -56,7 +59,7 @@ object L4_Cardinality extends Lesson {
       assertTrue(booleanCardinality == Answers.booleanCardinality)
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Identify the correct cardinality for the `TheThing` case object.
     */
@@ -69,7 +72,7 @@ object L4_Cardinality extends Lesson {
       assertTrue(theThingCardinality == Answers.theThingCardinality)
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Identify the correct cardinality for the `RPS` sealed trait.
     */
@@ -88,7 +91,7 @@ object L4_Cardinality extends Lesson {
       assertTrue(rpsCardinality == Answers.rpsCardinality)
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Identify the correct cardinality for the `RPSGame` case class.
     */
@@ -105,7 +108,7 @@ object L4_Cardinality extends Lesson {
       assertTrue(rpsRoundCardinality == allRounds.length)
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Identify the correct cardinality for the `RPSThumb` sealed trait.
     */
@@ -123,7 +126,7 @@ object L4_Cardinality extends Lesson {
       assertTrue(rpsThumbCardinality == Answers.rpsThumbCardinality)
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Identify the correct cardinality for the `Box` case class.
     */
@@ -149,7 +152,7 @@ object L4_Cardinality extends Lesson {
       )
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Identify the correct cardinality for the `RPSThumb` sealed trait.
     */

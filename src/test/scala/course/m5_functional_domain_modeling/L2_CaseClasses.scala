@@ -14,9 +14,10 @@ import zio.test.TestAspect.ignore
 
 object L2_CaseClasses extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
-    * Create a Person case class to get free getters (fields) for all the constructor parameters of the class.
+    * Create a Person case class to get free getters (fields) for all the
+    * constructor parameters of the class.
     */
   val testFields =
     test("fields") {
@@ -33,10 +34,11 @@ object L2_CaseClasses extends Lesson {
       )
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
-    * Create a Person case class with a name (String) and an age (Int), and delete the fake apply constructor to observe
-    * the free constructor that all case classes receive in their companion objects.
+    * Create a Person case class with a name (String) and an age (Int), and
+    * delete the fake apply constructor to observe the free constructor that all
+    * case classes receive in their companion objects.
     */
   val testApply =
     test("apply") {
@@ -49,9 +51,10 @@ object L2_CaseClasses extends Lesson {
       assertTrue(Person("Sherlock Holmes", 42) == Person("Sherlock Holmes", 42))
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
-    * Get a free implementation of equality for the `Profile` class by turning it into a case class.
+    * Get a free implementation of equality for the `Profile` class by turning
+    * it into a case class.
     */
   val testEquals = test("equals") {
     class Profile(val age: Int) // <- Convert this to a case class
@@ -59,9 +62,10 @@ object L2_CaseClasses extends Lesson {
     assertTrue(new Profile(42) == new Profile(42))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
-    * Get a free implementation of hash code for the `CreditCard` class by turning it into a case class.
+    * Get a free implementation of hash code for the `CreditCard` class by
+    * turning it into a case class.
     */
   val testHashCode =
     test("hashCode") {
@@ -70,9 +74,10 @@ object L2_CaseClasses extends Lesson {
       assertTrue(new CreditCard("123").hashCode == new CreditCard("123").hashCode)
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
-    * Get a free implementation of `toString` for the `Address` class by turning it into a case class.
+    * Get a free implementation of `toString` for the `Address` class by turning
+    * it into a case class.
     */
   val testToString =
     test("toString") {
@@ -81,9 +86,10 @@ object L2_CaseClasses extends Lesson {
       assertTrue(new Address("221B Baker Street").toString == "Address(221B Baker Street)")
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
-    * Get a free implementation of `copy` for the `Permissions` class by turning it into a case class.
+    * Get a free implementation of `copy` for the `Permissions` class by turning
+    * it into a case class.
     */
   val testCopy =
     test("copy") {

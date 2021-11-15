@@ -20,7 +20,7 @@ import scala.annotation.tailrec
   */
 object L1_RecursionBasics extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using recursion, compute the sum of a list of integers.
     */
@@ -30,7 +30,7 @@ object L1_RecursionBasics extends Lesson {
     assertTrue(sum(List(1, 2, 3, 4, 5)) == 15)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using recursion, compute the maximum of a list of integers.
     */
@@ -40,7 +40,7 @@ object L1_RecursionBasics extends Lesson {
     assertTrue(max(List(1, 7, 3, 2, 4, 5)) == 7)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using recursion, determine if a number is prime.
     */
@@ -54,7 +54,7 @@ object L1_RecursionBasics extends Lesson {
     assertTrue(!isPrime(4) && isPrime(7) && isPrime(11))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using recursion, compute the nth fibonacci number. The fibonacci sequence
     * is given by, 0, 1, 1, <sum of two previous nums>...
@@ -65,7 +65,7 @@ object L1_RecursionBasics extends Lesson {
     assertTrue(fib(3) == 2 && fib(4) == 3 && fib(5) == 5)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using recursion, sort the provided list, by taking the head, and sorting
     * those less than the head, and those not less than the head (separately),
@@ -77,7 +77,7 @@ object L1_RecursionBasics extends Lesson {
     assertTrue(sort(List(9, 23, 1, 5)) == List(1, 5, 9, 23))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using recursion, implement a method to loop until a predicate is
     * satisfied.
@@ -90,7 +90,7 @@ object L1_RecursionBasics extends Lesson {
     assertTrue(inc == 10)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using recursion, implement a method that repeats the specified action
     * again and again, until the predicate is true.
@@ -127,7 +127,7 @@ object L1_RecursionBasics extends Lesson {
 
 object L2_TailRecursion extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Write a tail-recursive version of the previous `sum`.
     */
@@ -138,7 +138,7 @@ object L2_TailRecursion extends Lesson {
     assertTrue(sum(List(1, 2, 3, 4, 5)) == 15)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Write a tail-recursive version of the previous `max`.
     */
@@ -149,7 +149,7 @@ object L2_TailRecursion extends Lesson {
     assertTrue(max(List(1, 7, 3, 2, 4, 5)) == 7)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Write a tail-recursive version of the previous `loop`.
     */
@@ -162,7 +162,7 @@ object L2_TailRecursion extends Lesson {
     assertTrue(inc == 10)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Write a tail-recursive version of the previous `repeat`.
     */
@@ -185,7 +185,7 @@ object L2_TailRecursion extends Lesson {
     assertTrue(result == "Sherlock")
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Try to find a way to write the fib sequence using tail recursion.
     *
@@ -198,7 +198,7 @@ object L2_TailRecursion extends Lesson {
     assertTrue(fib(3) == 2 && fib(4) == 3 && fib(5) == 5)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Try to find a way to write the pivot sort using tail recursion.
     *
@@ -232,27 +232,27 @@ object L2_TailRecursion extends Lesson {
   */
 object RecursionGraduation {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Implement an effect that gets a single, lower-case character from the
     * user.
     */
   def getChoice: Char = ???
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Implement an effect that prompts the user for their name, and returns it.
     */
   def getName: String = ???
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Implement an effect that chooses a random word from the dictionary. The
     * dictionary is `Dictionary`.
     */
   def chooseWord: String = ???
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Implement the main game loop, which gets choices from the user until the
     * game is won or lost.
@@ -309,7 +309,7 @@ object RecursionGraduation {
     else Step(s"Uh, oh! That choice is not correct. Keep trying!", true, newState)
   }
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Execute the main function and verify your program works as intended.
     */

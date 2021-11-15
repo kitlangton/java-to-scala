@@ -15,7 +15,7 @@ import zio.test.TestAspect._
   */
 object NullBasics extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * The `parentOf` function returns `null` for some paths. Modify the function
     * to return `Option[File]` rather than `File | Null`.
@@ -28,7 +28,7 @@ object NullBasics extends Lesson {
     assertTrue(parentOf("") != null)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using the `Some` and `None` constructors of `Option` directly, construct
     * an `Option[A]` from an `A` value that might be null.
@@ -42,7 +42,7 @@ object NullBasics extends Lesson {
     assertTrue(fromNullable(nullInt) == None && fromNullable(42) == Some(42))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `Option#getOrElse`, use the `DefaultConfig` fallback if the
     * `loadConfig` method returns `None`.
@@ -58,7 +58,7 @@ object NullBasics extends Lesson {
     assertTrue(config != null)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `Option#map`, convert an `Option[Int]` into an `Option[Char]` by
     * converting the int to a char.
@@ -71,7 +71,7 @@ object NullBasics extends Lesson {
     assertTrue(convert(option) == Some(42.toChar))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Implement the function `both`, which can combine two options into a single
     * option with a tuple of both results.
@@ -83,7 +83,7 @@ object NullBasics extends Lesson {
     assertTrue(both(Some(42), Some(24)) == Some((42, 24)))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Implement the function `firstOf`, which can combine two options into a
     * single option by using the first available value.
@@ -95,7 +95,7 @@ object NullBasics extends Lesson {
     assertTrue(firstOf(None, Some(24)) == Some(24))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Implement the function `chain`, which will pass the value in an option to
     * the specified callback, which will produce another option that will be
@@ -110,7 +110,7 @@ object NullBasics extends Lesson {
     assertTrue(chain(Some(42), (x: Int) => if (x < 10) None else Some(x)) == Some(42))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `Option#flatMap`, simplify the following pattern-matching heavy
     * code.
@@ -155,7 +155,7 @@ object NullBasics extends Lesson {
 
 object MigrateFromNullToOption extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Create a null-safe version of System.property methods.
     */
@@ -171,7 +171,7 @@ object MigrateFromNullToOption extends Lesson {
     assertTrue(SafeProperty.getProperty("foo.bar") == None)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Rewrite the following code to use `Option` instead of nulls.
     */

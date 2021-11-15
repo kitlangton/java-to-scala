@@ -17,10 +17,10 @@ import scala.io.StdIn
 
 object L5_Modeling extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
-    * Create a precise data model for `RelationshipStatus`, which models the relationship status of an individual:
-    * married, single, divorced.
+    * Create a precise data model for `RelationshipStatus`, which models the
+    * relationship status of an individual: married, single, divorced.
     */
   val testRelationshipStatus =
     test("RelationshipStatus") {
@@ -33,10 +33,11 @@ object L5_Modeling extends Lesson {
       assertTrue(makeMarried != makeSingle)
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
-    * Create a precise data model for an `IceCreamOrder`, which allows a customer to choose one of four ice cream
-    * flavors in either a cup, cone or milkshake (Conveyance), with an optional cherry-on-top.
+    * Create a precise data model for an `IceCreamOrder`, which allows a
+    * customer to choose one of four ice cream flavors in either a cup, cone or
+    * milkshake (Conveyance), with an optional cherry-on-top.
     */
   val testIceCream =
     test("IceCreamOrder") {
@@ -61,7 +62,7 @@ object L5_Modeling extends Lesson {
       )
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Create a precise data model for a user's cryptocurrency portfolio.
     */
@@ -91,10 +92,11 @@ object L5_Modeling extends Lesson {
       )
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
-    * Create a precise data model for a subscription for a SaaS product, which could be at the annual or monthly level,
-    * and which could bundle different features into the plan.
+    * Create a precise data model for a subscription for a SaaS product, which
+    * could be at the annual or monthly level, and which could bundle different
+    * features into the plan.
     */
   val testSubscription =
     test("subscription") {
@@ -126,36 +128,43 @@ object L5_Modeling extends Lesson {
 
 /** Functional Core / Imperative Shell
   *
-  * The constraints of immutable data forces new program architectures. At first, this can be a challenging, if not
-  * stupefying. However, these newer, more limited techniques tend to lead to better and more consistent designs.
+  * The constraints of immutable data forces new program architectures. At
+  * first, this can be a challenging, if not stupefying. However, these newer,
+  * more limited techniques tend to lead to better and more consistent designs.
   *
-  * The most common high-level functional architecture is often referred to Functional Core / Imperative Shell. This can
-  * be implemented in any language, yet it truly shines in Scala.
+  * The most common high-level functional architecture is often referred to
+  * Functional Core / Imperative Shell. This can be implemented in any language,
+  * yet it truly shines in Scala.
   *
-  * With Functional Core / Imperative Shell, we try to design as much of our logic as possible with immutable data. In
-  * Scala, this Functional Core would consist of ADTs formed of sealed trait and case class hierarchies. This purely
-  * functional state is then wrapped in a thin layer of mutable code, the Imperative Shell, which keeps a mutable
-  * reference to the immutable state and provides an interface to the messy world at the boundaries: e.g., User input,
-  * web requests, database access, etc.
+  * With Functional Core / Imperative Shell, we try to design as much of our
+  * logic as possible with immutable data. In Scala, this Functional Core would
+  * consist of ADTs formed of sealed trait and case class hierarchies. This
+  * purely functional state is then wrapped in a thin layer of mutable code, the
+  * Imperative Shell, which keeps a mutable reference to the immutable state and
+  * provides an interface to the messy world at the boundaries: e.g., User
+  * input, web requests, database access, etc.
   *
   * Exercise
   *
-  * Your task is to complete the following Counter command-line application, which is using the Functional Core /
-  * Imperative Shell design.
+  * Your task is to complete the following Counter command-line application,
+  * which is using the Functional Core / Imperative Shell design.
   */
 object FunctionalCounter {
 
   /** The Functional Core.
     *
-    * This is comprised of immutable data, which contains pure methods that generate subsequent states based upon input.
+    * This is comprised of immutable data, which contains pure methods that
+    * generate subsequent states based upon input.
     */
   final case class Model(count: Int) {
 
-    /** Process the action and create a modified copy which represents the next iteration of the Model.
+    /** Process the action and create a modified copy which represents the next
+      * iteration of the Model.
       */
     def process(action: Action): Model = ???
 
-    /** Use the current state to render a user-readable string that will be printed to the console.
+    /** Use the current state to render a user-readable string that will be
+      * printed to the console.
       */
     def render: String = ???
   }
@@ -192,7 +201,8 @@ object FunctionalCounter {
 
   /** BONUS
     *
-    * Rewrite the game loop into a tail-recursive function, removing any explicit mutability.
+    * Rewrite the game loop into a tail-recursive function, removing any
+    * explicit mutability.
     */
   def gameLoop(): Unit = {
     var state = Model.empty
@@ -212,16 +222,21 @@ object FunctionalCounter {
 
 /** PROJECT
   *
-  * Using the Functional Core / Imperative Shell paradigm, implement a game of TicTacToe. Focus first on designing the
-  * immutable game state. Once the design of the core has settled, integrate it into the imperative shell—the game loop.
+  * Using the Functional Core / Imperative Shell paradigm, implement a game of
+  * TicTacToe. Focus first on designing the immutable game state. Once the
+  * design of the core has settled, integrate it into the imperative shell—the
+  * game loop.
   */
 
 object TicTacToe {
 
-  /** The Functional Core, a purely functional representation of TicTacToe game state.
+  /** The Functional Core, a purely functional representation of TicTacToe game
+    * state.
     *
-    * Its methods, based on its input, will generate modified copies of itself—the next iteration of the game state. The
-    * methods may also project out some value given the current state, e.g., whether or not the game is still active.
+    * Its methods, based on its input, will generate modified copies of
+    * itself—the next iteration of the game state. The methods may also project
+    * out some value given the current state, e.g., whether or not the game is
+    * still active.
     */
   final case class State() {
 
@@ -241,7 +256,8 @@ object TicTacToe {
 
   /** The Imperative Shell.
     *
-    * This deals primarily with user input and updating a mutable reference to the game state.
+    * This deals primarily with user input and updating a mutable reference to
+    * the game state.
     */
   def main(args: Array[String]): Unit = {
     var state = State()
@@ -256,13 +272,14 @@ object TicTacToe {
 
 /** PROJECT
   *
-  * While many programming languages have a construct like case classes, few have the power of sealed traits, and most
-  * do not have the pattern matching capabilities of Scala. With the combination of these powerful features, you can
-  * construct very precise data models that eliminate runtime errors and make it easier than ever to test and maintain
-  * code.
+  * While many programming languages have a construct like case classes, few
+  * have the power of sealed traits, and most do not have the pattern matching
+  * capabilities of Scala. With the combination of these powerful features, you
+  * can construct very precise data models that eliminate runtime errors and
+  * make it easier than ever to test and maintain code.
   *
-  * In this graduation project, you will gain experience constructing precise data models using case classes and sealed
-  * traits.
+  * In this graduation project, you will gain experience constructing precise
+  * data models using case classes and sealed traits.
   */
 object DataGraduation {
 
@@ -290,19 +307,21 @@ object DataGraduation {
       }
   }
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
-    * Construct a data model for the state of a game world in a text-based role-playing game. The data model should
-    * represent the player character, the map of the game world, items and characters in the game world, and anything
-    * else relevant to the game.
+    * Construct a data model for the state of a game world in a text-based
+    * role-playing game. The data model should represent the player character,
+    * the map of the game world, items and characters in the game world, and
+    * anything else relevant to the game.
     */
   final case class State(playerName: String)
   final case class Step(nextState: Option[State], output: String)
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
-    * Implement the `nextStep` function in such a fashion that new states for the game world are constructed from both
-    * the old state and the current command read from the user.
+    * Implement the `nextStep` function in such a fashion that new states for
+    * the game world are constructed from both the old state and the current
+    * command read from the user.
     */
   def nextStep(state: State, command: Command): Step = ???
 

@@ -13,7 +13,7 @@ import zio.test.TestAspect.ignore
 
 object L3_PatternMatching extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Use pattern matching to extract out the `street` of `Address`.
     */
@@ -25,7 +25,7 @@ object L3_PatternMatching extends Lesson {
     assertTrue(extractStreet(Address("221B Baker")) == "221B Baker")
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Use pattern matching to extract out the `postalCode` of `Address`, using a
     * wildcard to ignore (match any) `street`.
@@ -39,7 +39,7 @@ object L3_PatternMatching extends Lesson {
       assertTrue(extractPostalCode(Address("221B Baker", "NW1 6XE")) == "NW1 6XE")
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using pattern matching on a constant, implement the provided function so
     * that it returns true for any street matching "221B Baker", regardless of
@@ -57,7 +57,7 @@ object L3_PatternMatching extends Lesson {
       )
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using multiple ordered case clauses in a pattern match, implement the
     * `neighbor` function such that it returns the correct `Deduction` based on
@@ -90,7 +90,7 @@ object L3_PatternMatching extends Lesson {
       )
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using pattern guards, implement the provided function so that it returns
     * true for any street that contains "Baker".
@@ -104,7 +104,7 @@ object L3_PatternMatching extends Lesson {
       assertTrue(isBaker(Address("220 Baker", "NW1 6XE")))
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using nested patterns, implement the provided function so that it extracts
     * out the postal code of any person.
@@ -122,7 +122,7 @@ object L3_PatternMatching extends Lesson {
       assertTrue(extractPostalCode(sherlock) == "NW1 6XE")
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using stable identifiers, return true if an address street matches the
     * `sherlockStreet` constant.
@@ -140,7 +140,7 @@ object L3_PatternMatching extends Lesson {
       assertTrue(isSherlockStreet(address))
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Use typed patterns to implement the `scan` method, returning the proper
     * ScanResult for the contents of the given Box.

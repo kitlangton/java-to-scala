@@ -16,17 +16,23 @@ import zio.test.assertTrue
 
 /** # Scala for the Java Developer
   *
-  * Scala for the Java Developer is a 30-hour course that rigorously trains developers having background experience in
-  * Java, Kotlin, or C# how to become effective functional programmers using the Scala programming language. Emphasizing
-  * the practical and pragmatic aspects of the Scala programming language that help developers solve real-world
-  * problems, Scala for the Java Developer is an ideal component of onboarding training for recent hires, helping to
-  * solidify the knowledge and cultivate practical skills for developers who will work with Scala code bases.
+  * Scala for the Java Developer is a 30-hour course that rigorously trains
+  * developers having background experience in Java, Kotlin, or C# how to become
+  * effective functional programmers using the Scala programming language.
+  * Emphasizing the practical and pragmatic aspects of the Scala programming
+  * language that help developers solve real-world problems, Scala for the Java
+  * Developer is an ideal component of onboarding training for recent hires,
+  * helping to solidify the knowledge and cultivate practical skills for
+  * developers who will work with Scala code bases.
   *
-  * Welcome to the start of an exhilarating journey into mastering Scala, one of the most powerful commercial
-  * programming languages there is. It will be challenging, yet it will be immensely rewarding. We want to get you up
-  * and running quickly, following the Pareto principle: Which 20% of Scala's features will give us 80% of the benefits?
+  * Welcome to the start of an exhilarating journey into mastering Scala, one of
+  * the most powerful commercial programming languages there is. It will be
+  * challenging, yet it will be immensely rewarding. We want to get you up and
+  * running quickly, following the Pareto principle: Which 20% of Scala's
+  * features will give us 80% of the benefits?
   *
-  * This repository is broken into modules (you're currently in module 0, the introduction)
+  * This repository is broken into modules (you're currently in module 0, the
+  * introduction)
   *
   *   - Scala project management
   *     - Introduction to SBT
@@ -76,16 +82,19 @@ import zio.test.assertTrue
   */
 object L1_Exercises extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Each lesson contains various exercises. Complete the following steps:
     *
     *   - Delete `@@ ignore` from the end of the test
     *   - Fix the `add` method to add its two arguments
     *   - Run the tests
-    *     - In IntelliJ IDEA, you can click on the the green arrows next to the containing object
-    *     - In VSCode, you can click on the run button directly above the containing object
-    *     - Otherwise, you may run `testOnly **.L1_Exercises*` (or the respective lesson name) after launching `sbt`
+    *     - In IntelliJ IDEA, you can click on the the green arrows next to the
+    *       containing object
+    *     - In VSCode, you can click on the run button directly above the
+    *       containing object
+    *     - Otherwise, you may run `testOnly **.L1_Exercises*` (or the
+    *       respective lesson name) after launching `sbt`
     *   - Rinse & Repeat, until all tests are passing
     */
 
@@ -97,7 +106,7 @@ object L1_Exercises extends Lesson {
       assertTrue(add(12, 88) == 100)
     } @@ ignore // <- Delete `@@ ignore` from here, so that the test can run
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Another example test. Here, finish `uppercase` so it works as expected.
     */
@@ -110,16 +119,18 @@ object L1_Exercises extends Lesson {
       assertTrue(uppercase("i'm getting the hang of it!") == "I'M GETTING THE HANG OF IT!")
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
-    * Occasionally exercises will not have tests; there will be instruction instead. This is often to explore features
-    * of the IDE, compiler, or type system. For example:
+    * Occasionally exercises will not have tests; there will be instruction
+    * instead. This is often to explore features of the IDE, compiler, or type
+    * system. For example:
     *
-    * If you're using IntelliJ IDEA: Position your cursor in `fillInTheType`, hit Option-Enter, and then select "Add
-    * type annotation to value definition"
+    * If you're using IntelliJ IDEA: Position your cursor in `fillInTheType`,
+    * hit Option-Enter, and then select "Add type annotation to value
+    * definition"
     *
-    * If you're using VSCode: Position your cursor in `fillInTheType`, hit Option-Enter, and then select "Insert type
-    * annotation"
+    * If you're using VSCode: Position your cursor in `fillInTheType`, hit
+    * Option-Enter, and then select "Insert type annotation"
     */
 
   val fillInTheType = "What am I?"

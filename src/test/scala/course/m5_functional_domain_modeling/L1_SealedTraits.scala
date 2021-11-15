@@ -11,21 +11,26 @@ import zio.test.assertTrue
 // ███████║███████╗██║  ██║███████╗███████╗██████╔╝       ██║   ██║  ██║██║  ██║██║   ██║   ███████║
 // ╚══════╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝        ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝
 
-/** In functional Scala, nearly all data is immutable. Data models are constructed entirely from either "records", which
-  * have multiple fields of different types, or "enumerations", which have multiple cases with different structure.
-  * Scala provides powerful functionality built into records and enumerations. Everything about the way you construct
-  * these data models to the way you use them is different than in an object-oriented programming language. The emphasis
-  * is on making very precise data models that cannot be used to store "bad data", which results in eliminating runtime
-  * errors and keeping bad data out of databases and third-party systems.
+/** In functional Scala, nearly all data is immutable. Data models are
+  * constructed entirely from either "records", which have multiple fields of
+  * different types, or "enumerations", which have multiple cases with different
+  * structure. Scala provides powerful functionality built into records and
+  * enumerations. Everything about the way you construct these data models to
+  * the way you use them is different than in an object-oriented programming
+  * language. The emphasis is on making very precise data models that cannot be
+  * used to store "bad data", which results in eliminating runtime errors and
+  * keeping bad data out of databases and third-party systems.
   *
-  * In this module, you will learn how to adopt the functional tools that Scala gives you to solve data modeling
-  * problems in a precise way that improves the maintainability and reliability of your software.
+  * In this module, you will learn how to adopt the functional tools that Scala
+  * gives you to solve data modeling problems in a precise way that improves the
+  * maintainability and reliability of your software.
   */
 object L1_SealedTraits extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
-    * Add Pluto (back!) to the Planet sealed trait, and then recompile the project.
+    * Add Pluto (back!) to the Planet sealed trait, and then recompile the
+    * project.
     *
     * Notice the most delightful error!
     */
@@ -50,7 +55,8 @@ object L1_SealedTraits extends Lesson {
 
   import Planet._
 
-  /** Returns the surface gravity, as a percentage of Earth's gravity, for the given planet.
+  /** Returns the surface gravity, as a percentage of Earth's gravity, for the
+    * given planet.
     */
   def gravity(planet: Planet): SurfaceGravity = planet match {
     case Mercury => SurfaceGravity(0.377)
@@ -86,7 +92,7 @@ object L1_SealedTraits extends Lesson {
       )
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Now do the same thing with the Stringly-Typed Planet
     *
@@ -106,7 +112,8 @@ object L1_SealedTraits extends Lesson {
     val allPlanets: List[String] = List(Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune)
   }
 
-  /** Returns the surface gravity, as a percentage of Earth's gravity, for the given planet.
+  /** Returns the surface gravity, as a percentage of Earth's gravity, for the
+    * given planet.
     */
   def gravity(planet: String): SurfaceGravity =
     if (planet == "Mercury") SurfaceGravity(0.377)
@@ -142,9 +149,10 @@ object L1_SealedTraits extends Lesson {
       )
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
-    * Use "match (exhaustive)" to generate the pattern match, then finish implementing `isRed`.
+    * Use "match (exhaustive)" to generate the pattern match, then finish
+    * implementing `isRed`.
     */
   sealed trait Color
 
@@ -167,10 +175,10 @@ object L1_SealedTraits extends Lesson {
       )
     } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
-    * Create a sealed trait `Country` that is extended by case objects `UK`, `Germany`, `India`, `Netherlands`, and
-    * `USA`.
+    * Create a sealed trait `Country` that is extended by case objects `UK`,
+    * `Germany`, `India`, `Netherlands`, and `USA`.
     */
   trait Country // <- Finish defining this sealed trait
   object UK

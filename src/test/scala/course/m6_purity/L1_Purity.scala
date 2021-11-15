@@ -21,7 +21,7 @@ import scala.util.Random
   */
 object L1_Purity extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Make the following function total.
     */
@@ -40,7 +40,7 @@ object L1_Purity extends Lesson {
     assertTrue(reduce[Int](List.empty[Int], _ + _) ne null)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Make the following function total.
     */
@@ -58,7 +58,7 @@ object L1_Purity extends Lesson {
     )
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Make the following function pure.
     */
@@ -73,7 +73,7 @@ object L1_Purity extends Lesson {
     assertTrue(normal() == normal())
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Make the following function pure.
     *
@@ -112,7 +112,7 @@ object PurityGraduation extends DefaultRunnableSpec {
     def map[B](f: A => B): Stateful[State, B] =
       self.flatMap(a => Stateful.succeed(f(a)))
 
-    /** EXERCISE
+    /** ✏ EXERCISE
       *
       * Implement the `flatMap` method so that state is threaded through both
       * computations.
@@ -128,19 +128,19 @@ object PurityGraduation extends DefaultRunnableSpec {
 
   object Stateful {
 
-    /** EXERCISE
+    /** ✏ EXERCISE
       *
       * Implement the `succeed` method in a way that does not change state.
       */
     def succeed[S, A](a: => A): Stateful[S, A] = ???
 
-    /** EXERCISE
+    /** ✏ EXERCISE
       *
       * Implement `get` to return the state unmodified.
       */
     def get[S]: Stateful[S, S] = ???
 
-    /** EXERCISE
+    /** ✏ EXERCISE
       *
       * Implement `set` to set the state and return unit.
       */

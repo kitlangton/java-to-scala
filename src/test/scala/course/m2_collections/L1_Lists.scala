@@ -1,4 +1,4 @@
-package course.m1_basics.m2_collections
+package course.m2_collections
 
 import zio.test._
 import zio.test.TestAspect._
@@ -20,7 +20,7 @@ import course.Lesson
 
 object ListOperations extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `List#foreach`, add up the contents of the provided list into the
     * variable `sum`.
@@ -37,7 +37,7 @@ object ListOperations extends Lesson {
     assertTrue(sum == 6)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `List#map`, transform the provided list into a new list, where each
     * element of the list has been multiplied by 2.
@@ -50,7 +50,7 @@ object ListOperations extends Lesson {
     assertTrue(list2.sum == 12 && list2.length == list1.length)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `List#filter`, filter the provided list so that it only contains
     * even numbers.
@@ -65,7 +65,7 @@ object ListOperations extends Lesson {
     assertTrue(list2 == List(0, 0, 2))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Use `List#take` to take the first 2 elements of the provided list.
     */
@@ -77,7 +77,7 @@ object ListOperations extends Lesson {
     assertTrue(list2 == List(1, 2))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Use `List#takeWhile` to take elements for as long as they are strictly
     * less than 3.
@@ -90,7 +90,7 @@ object ListOperations extends Lesson {
     assertTrue(list2 == List(1, 2, 0))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Use `List#drop` to drop the first 2 elements of the provided list.
     */
@@ -102,7 +102,7 @@ object ListOperations extends Lesson {
     assertTrue(list2 == List(3, 4))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Use `List#dropWhile` to drop elements for as long as they are strictly
     * less than 3.
@@ -115,7 +115,7 @@ object ListOperations extends Lesson {
     assertTrue(list2 == List(3, 1, 2))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `List#collect` and a partial function, collect all even numbers from
     * the provided List, wrapping them into an `Even` wrapper type.
@@ -132,7 +132,7 @@ object ListOperations extends Lesson {
     assertTrue(list2 == List(Even(0), Even(0), Even(2)))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `partition`, partition the provided list of integers into those that
     * are even, and those that are odd.
@@ -147,7 +147,7 @@ object ListOperations extends Lesson {
     assertTrue(even == List(0, 0, 2) && odd == List(3, 1))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `reduceOption`, sum up both of the provided lists. In what cases
     * does `reduceOption` return `None`?
@@ -166,7 +166,7 @@ object ListOperations extends Lesson {
     )
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `List#find`, find the first number that is greater than two in the
     * provided list.
@@ -179,7 +179,7 @@ object ListOperations extends Lesson {
     assertTrue(firstGreaterThan2 == Some(3))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `List#exists`, test to see if there exists an element of the list
     * that is negative.
@@ -192,7 +192,7 @@ object ListOperations extends Lesson {
     assertTrue(existsNegative)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `List#forall`, test to see if all elements of the list are even
     * numbers.
@@ -226,7 +226,7 @@ object ListOperations extends Lesson {
 
 object Folds extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `List#foldLeft`, compute the sum of a list.
     */
@@ -236,7 +236,7 @@ object Folds extends Lesson {
     assertTrue(sum(List(1, 2, 3, 4, 5)) == 15)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `List#foldLeft`, compute the maximum element of a list.
     */
@@ -246,7 +246,7 @@ object Folds extends Lesson {
     assertTrue(max(List(1, 7, 3, 2, 4, 5)) == 7)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `List#foldLeft`, compute the minimum element of a list.
     */
@@ -256,7 +256,7 @@ object Folds extends Lesson {
     assertTrue(min(List(1, 7, 3, 2, 0, 4, 5)) == 0)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `List#foldLeft`, compute the reverse of a list.
     */
@@ -266,7 +266,7 @@ object Folds extends Lesson {
     assertTrue(reverse(List(1, 7, 3)) == List(3, 7, 1))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `List#foldLeft`, implement a function to partition a list into those
     * satisfying a predicate, and those not satisfying the predicate.
@@ -277,7 +277,7 @@ object Folds extends Lesson {
     assertTrue(partition(List(1, 7, 3))(_ < 5) == ((List(1, 3), List(7))))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `List#foldLeft`, implement a function to take `n` elements from a
     * list.
@@ -288,7 +288,7 @@ object Folds extends Lesson {
     assertTrue(take(2, List(1, 7, 3)) == List(1, 7))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `List#foldLeft`, implement a function to take elements from a list
     * for as long as a predicate is satisfied.
@@ -313,7 +313,7 @@ object Folds extends Lesson {
 
 object Performance extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Investigate and fix the performance problem with this code merely by
     * changing the collection type used.
@@ -328,7 +328,7 @@ object Performance extends Lesson {
     assertTrue(sum(0 to 10000) > 0)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Investigate and fix the performance problem with this code merely by
     * changing the collection type used.
@@ -345,7 +345,7 @@ object Performance extends Lesson {
     assertTrue(sumProduct(List.fill(1000)(2), List.fill(1000)(2)) > 0)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Investigate and fix the performance problem with this code merely by
     * changing the collection type used.
@@ -375,7 +375,7 @@ object Performance extends Lesson {
   */
 object CollectionsGraduation {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using other Scala collections, choose a representation for a graph whose
     * nodes are identified by type `V`, and whose edges are identified by type
@@ -383,39 +383,39 @@ object CollectionsGraduation {
     */
   final case class Graph[E, V]() {
 
-    /** EXERCISE
+    /** ✏ EXERCISE
       *
       * Implement a function to retrieve the edges connected to the specified
       * node.
       */
     def edgesOf(v: V): Set[E] = ???
 
-    /** EXERCISE
+    /** ✏ EXERCISE
       *
       * Implement a function to connect the two nodes with the specified edge.
       */
     def connect(v1: V, e: E, v2: V): Graph[E, V] = ???
 
-    /** EXERCISE
+    /** ✏ EXERCISE
       *
       * Implement a function to cdisonnect the two nodes from the specified
       * edge.
       */
     def disconnect(v1: V, e: E, v2: V): Graph[E, V] = ???
 
-    /** EXERCISE
+    /** ✏ EXERCISE
       *
       * Implement a function to return the set of all nodes in the graph.
       */
     def nodes: Set[V] = ???
 
-    /** EXERCISE
+    /** ✏ EXERCISE
       *
       * Implement a function to delete the specified node.
       */
     def delete(v: V): Graph[E, V] = ???
 
-    /** EXERCISE
+    /** ✏ EXERCISE
       *
       * Implement a function to fold over the nodes, passing at each node both a
       * current state value, and the set of edges connected to the node.

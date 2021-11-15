@@ -17,7 +17,7 @@ import zio.test.TestAspect._
 
 object ExceptionConstructors extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Modify `parseInt` to return an `Option`.
     */
@@ -32,7 +32,7 @@ object ExceptionConstructors extends Lesson {
     assertTrue(test == "None")
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Modify `parseInt` to return a `Try`.
     */
@@ -49,7 +49,7 @@ object ExceptionConstructors extends Lesson {
     assertTrue(test == "Failure")
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Modify `parseInt` to return an `Either`, where `Left` indicates failure to
     * parse an integer.
@@ -75,7 +75,7 @@ object ExceptionConstructors extends Lesson {
 
 object MappingExceptions extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `Option##map`, use the `parseInt` helper function to implement a
     * correct `Id` constructor.
@@ -98,7 +98,7 @@ object MappingExceptions extends Lesson {
     assertTrue(Id.fromString("123").isDefined)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `Try#map`, use the `parseInt` helper function to implement a correct
     * `Natural.fromString` constructor, which will succeed only if the string is
@@ -122,7 +122,7 @@ object MappingExceptions extends Lesson {
     assertTrue(Id.fromString("123").isSuccess)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `Either#map`, use the `parseInt` helper function to implement a
     * correct `Natural.fromString` constructor, which will succeed only if the
@@ -158,7 +158,7 @@ object MappingExceptions extends Lesson {
 
 object Fallbacks extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Implement `fallback` in such a way that it prefers the left hand side, if
     * it contains a value, otherwise, it will use the right hand side.
@@ -169,7 +169,7 @@ object Fallbacks extends Lesson {
     assertTrue(fallback(None, Some(42)) == Some(42))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Implement `fallback` in such a way that it prefers the left hand side, if
     * it contains a value, otherwise, it will use the right hand side.
@@ -182,7 +182,7 @@ object Fallbacks extends Lesson {
     assertTrue(fallback(Failure(new Throwable), Success(42)) == Success(42))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Implement `fallback` in such a way that it prefers the left hand side, if
     * it contains a value, otherwise, it will use the right hand side.
@@ -204,7 +204,7 @@ object Fallbacks extends Lesson {
 
 object FlatMapTests extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `Option##flatMap`, use the `parseInt` helper function to implement a
     * correct `Natural.fromString` constructor, which will succeed only if the
@@ -228,7 +228,7 @@ object FlatMapTests extends Lesson {
     assertTrue(Natural.fromString("123").isDefined)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `Try#flatMap`, use the `parseInt` helper function to implement a
     * correct `Natural.fromString` constructor, which will succeed only if the
@@ -252,7 +252,7 @@ object FlatMapTests extends Lesson {
     assertTrue(Natural.fromString("123").isSuccess)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `Either##flatMap`, use the `parseInt` helper function to implement a
     * correct `Natural.fromString` constructor, which will succeed only if the
@@ -289,7 +289,7 @@ object FlatMapTests extends Lesson {
 
 object BothExceptions extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Implement `both` in a way that, when values are present on both sides,
     * will produce a tuple of those values.
@@ -300,7 +300,7 @@ object BothExceptions extends Lesson {
     assertTrue(both(Some(4), Some(2)) == Some((4, 2)))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Implement `both` in a way that, when values are present on both sides,
     * will produce a tuple of those values.
@@ -313,7 +313,7 @@ object BothExceptions extends Lesson {
     assertTrue(both(Try(4), Try(2)) == Try((4, 2)))
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Implement `both` in a way that, when values are present on both sides,
     * will produce a tuple of those values.
@@ -335,7 +335,7 @@ object BothExceptions extends Lesson {
 // porting exceptions
 object PortingExceptions extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `Option##flatMap`, use the `parseInt` helper function to implement a
     * correct `Natural.fromString` constructor, which will succeed only if the
@@ -359,7 +359,7 @@ object PortingExceptions extends Lesson {
     assertTrue(Natural.fromString("123").isDefined)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `Try#flatMap`, use the `parseInt` helper function to implement a
     * correct `Natural.fromString` constructor, which will succeed only if the
@@ -383,7 +383,7 @@ object PortingExceptions extends Lesson {
     assertTrue(Natural.fromString("123").isSuccess)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Using `Either##flatMap`, use the `parseInt` helper function to implement a
     * correct `Natural.fromString` constructor, which will succeed only if the
@@ -420,7 +420,7 @@ object PortingExceptions extends Lesson {
 
 object MixedExceptions extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Find a way to combine an Option and a Try in a way that loses no
     * information.
@@ -443,7 +443,7 @@ object MixedExceptions extends Lesson {
     assertTrue(getUserAndDocs == ???)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Find a way to combine an Either and an Option in a way that loses no
     * information.
@@ -466,7 +466,7 @@ object MixedExceptions extends Lesson {
     assertTrue(getUserAndDocs == ???)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Find a way to combine an Either and a Try in a way that loses no
     * information.
@@ -489,7 +489,7 @@ object MixedExceptions extends Lesson {
     assertTrue(getUserAndDocs == ???)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Find a way to combine an Either, a Try, and an Option in a way that loses
     * no information.

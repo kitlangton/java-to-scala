@@ -21,7 +21,7 @@ import zio.test._
   */
 object FunctionsAsValues extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Create a lambda which squares its argument and store the lambda into the
     * `square` variable
@@ -32,7 +32,7 @@ object FunctionsAsValues extends Lesson {
     assertTrue(square(3) == 9)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Create a lambda with two arguments, which adds them together, and store
     * the lambda into the `plus` variable.
@@ -43,7 +43,7 @@ object FunctionsAsValues extends Lesson {
     assertTrue(plus(2, 2) == 4)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Use the `_` to create a lambda that adds one to its argument.
     */
@@ -53,7 +53,7 @@ object FunctionsAsValues extends Lesson {
     assertTrue(addTwo(2) == 4)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Use `Function#andThen` to compose two of the following functions together
     * to create a composite function that counts the number of digits inside an
@@ -68,7 +68,7 @@ object FunctionsAsValues extends Lesson {
     assertTrue(numberOfDigits(123) == 3)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Use `Function#compose` to compose two of the following functions together
     * to create a composite function that counts the number of digits inside an
@@ -85,7 +85,7 @@ object FunctionsAsValues extends Lesson {
     assertTrue(numberOfDigits(123) == 3)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Use `identity` to create a function that returns its same string argument.
     */
@@ -95,7 +95,7 @@ object FunctionsAsValues extends Lesson {
     assertTrue(sameString("foobar") == "foobar" && sameString("barfoo") == "barfoo")
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Use `Function.const` to create a function that always returns 42,
     * regardless of whichever string argument is passed.
@@ -106,7 +106,7 @@ object FunctionsAsValues extends Lesson {
     assertTrue(answer("foo") == answer("bar") && answer("foobar") == 42)
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Create a function which returns a function. The returned function should
     * prepend the specified number of spaces to the string that it is passed.
@@ -117,7 +117,7 @@ object FunctionsAsValues extends Lesson {
     assertTrue(prependSpace(5)("foo") == "     foo")
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Create a function that returns a function transformer. The function
     * transformer should take a `String => String` function, and then return a
@@ -150,7 +150,7 @@ object FunctionTypes {
   def assertTypeEquals[A, B](implicit ev: A <:< B) =
     assertCompletes
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Determine the type of `f1`, and place this (function) type in the space
     * provided. If you are correct, then the test will compile.
@@ -161,7 +161,7 @@ object FunctionTypes {
 
   guessType(f1)(guess1)
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Determine the type of `f2`, and place this (function) type in the space
     * provided. If you are correct, then the test will compile.
@@ -172,7 +172,7 @@ object FunctionTypes {
 
   guessType(f2)(guess2)
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Determine the type of `f3`, and place this (function) type in the space
     * provided. If you are correct, then the test will compile.
@@ -183,7 +183,7 @@ object FunctionTypes {
 
   guessType(f3)(guess3)
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Determine the type of `f4`, and place this (function) type in the space
     * provided. If you are correct, then the test will compile.
@@ -194,7 +194,7 @@ object FunctionTypes {
 
   guessType(f4)(guess4)
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Determine the type of `f5`, and place this (function) type in the space
     * provided. If you are correct, then the test will compile.
@@ -212,7 +212,7 @@ object FunctionTypes {
   */
 object PartialFunctions extends Lesson {
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Define a `divide` partial function that is only defined when the second
     * component of the tuple is non-zero.
@@ -228,7 +228,7 @@ object PartialFunctions extends Lesson {
     )
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Define a `toInt` PartialFunction that is only defined when the string can
     * be converted to an `Int`.
@@ -243,7 +243,7 @@ object PartialFunctions extends Lesson {
     )
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Define a `divideOption` method by using the `PartialFunction#lift` method.
     */
@@ -260,7 +260,7 @@ object PartialFunctions extends Lesson {
     )
   } @@ ignore
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Complete the PartialFunction in the body of `collect` which filters out
     * the odd numbers, and turns the even numbers into strings.
@@ -285,6 +285,67 @@ object PartialFunctions extends Lesson {
     )
 }
 
+/** Predicates are functions that return a Boolean value. The type of a
+  * predicate is `A => Boolean`.
+  */
+object PredicateExercise {
+
+  type Predicate[-A] = A => Boolean
+
+  object Predicate {
+
+    // # CONSTRUCTORS
+    // Constructors are ways to create a type.
+
+    val always: Predicate[Any] = { _ => true }
+
+    val never: Predicate[Any] = { _ => false }
+
+    // A => A => Boolean
+    def equalTo[A](value: A): Predicate[A] = { a => value == a }
+
+    // lessThan:  Predicate[Int]
+    def lessThan(value: Int): Predicate[Int] = { a => a < value }
+
+    def greaterThan(value: Int): Predicate[Int] = { a => a > value }
+
+    def between(lower: Int, upper: Int): Predicate[Int] =
+      and(lessThan(upper), greaterThan(lower))
+
+    def outside(lower: Int, upper: Int): Predicate[Int] =
+      and(lessThan(lower), greaterThan(upper))
+
+    // # COMBINATORS
+    // Combinators are ways to combine a type.
+
+    def and[A](p1: Predicate[A], p2: Predicate[A]): Predicate[A] = { a => (p1(a) && p2(a)) }
+
+    def or[A](p1: Predicate[A], p2: Predicate[A]): Predicate[A] = a => (p1(a) || p2(a))
+
+  }
+
+  implicit class ParserExtensionMethods[A](self: Predicate[A]) {
+
+    def or(other: Predicate[A]): Predicate[A] = Predicate.or(self, other)
+
+    def and(other: Predicate[A]): Predicate[A] = Predicate.and(self, other)
+
+    // function composition
+    // building up a huge stack of nested functions
+    // each of which modifies the behavior slightly
+    // constructing a huge pipeline of functions
+    def negate: Predicate[A] = { a => !self(a) }
+
+  }
+
+  val intPredicate  = Predicate.or(Predicate.equalTo(42), Predicate.between(100, 200))
+  val intPredicate2 = Predicate.equalTo(42) or Predicate.between(100, 200)
+
+  def main(args: Array[String]): Unit =
+    println("hi")
+
+}
+
 /** Parsers are a great example of the power of lambdas. A parser can be viewed
   * as nothing more than a lambda. Functions can construct or combine parsers,
   * providing the ability to compositionally specify how to parse any type of
@@ -298,28 +359,28 @@ object LambdasGraduation {
 
   object Parser {
 
-    /** EXERCISE
+    /** ✏ EXERCISE
       *
       * Implement a parser that succeeds with the specified value, but does not
       * consume any input.
       */
     def succeed[A](a: => A): Parser[A] = ???
 
-    /** EXERCISE
+    /** ✏ EXERCISE
       *
       * Implement a parser that fails with the specified message, and does not
       * consume any input.
       */
     def fail(message: => String): Parser[Nothing] = ???
 
-    /** EXERCISE
+    /** ✏ EXERCISE
       *
       * Implement a parser that consumes any character, or fails if there are no
       * characters left to consume.
       */
     def anyChar: Parser[Char] = ???
 
-    /** EXERCISE
+    /** ✏ EXERCISE
       *
       * Implement a parser that parses only the specified character, or fails
       * with a message indicating which character was expected.
@@ -331,7 +392,7 @@ object LambdasGraduation {
 
     def map[B](f: A => B): Parser[B] = self.flatMap(a => Parser.succeed(f(a)))
 
-    /** EXERCISE
+    /** ✏ EXERCISE
       *
       * Implement a function that can feed the output value of this parser into
       * the provided callback, which can return a new parser which will be fed
@@ -346,7 +407,7 @@ object LambdasGraduation {
 
     def ~>[B](that: => Parser[B]): Parser[B] = (self ~ that).map(_._2)
 
-    /** EXERCISE
+    /** ✏ EXERCISE
       *
       * Implement a function that will try to parse using the left-hand side,
       * but if that fails, it will try to parse using the right-hand side.
@@ -377,7 +438,7 @@ object LambdasGraduation {
     final case class Values(columns: List[String]) extends CSVData
   }
 
-  /** EXERCISE
+  /** ✏ EXERCISE
     *
     * Implement a function to parse the contents of a CSV file into a list of
     * CSV data elements.
