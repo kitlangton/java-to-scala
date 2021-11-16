@@ -20,11 +20,11 @@ import zio.test.assertTrue
   */
 object ImplicitParameters extends Lesson {
 
-  // An explicit parameter
+  // An explicit parameter list
   def explicitMethod(int: Int) =
     s"Here's the Int you gave me: $int"
 
-  // An implicit parameter
+  // An implicit parameter list
   def implicitMethod(implicit int: Int) =
     s"Here's the Int I found: $int"
 
@@ -37,6 +37,7 @@ object ImplicitParameters extends Lesson {
     * But now let's call both methods without providing an argument. Uncomment
     * the following lines and note the errors:
     */
+
   // val missingExplicitArguments = explicitMethod // <- Uncomment this line
   // val missingImplicitArguments = implicitMethod // <- Uncomment this line
 
@@ -54,6 +55,7 @@ object ImplicitParameters extends Lesson {
     * Uncomment the following and see what happens. (It should compile this
     * time!)
     */
+
   // implicit val fortyTwo: Int   = 42             // <- Uncomment this line
   // val findingImplicitArguments = implicitMethod // <- Uncomment this line
 
@@ -182,9 +184,9 @@ object ImplicitParameters extends Lesson {
 
   /** ✏ EXERCISE
     *
-    * One thing to keep in mind is that in order for Scala to find an implicit
-    * (a process called "Implicit Resolution"), there must not be multiple
-    * implicits defined for the same type in scope.
+    * One thing to keep in mind is that when the Scala compiler searches for an
+    * implicit (a process known as "Implicit Resolution"), there must not be
+    * multiple implicits defined for the same type in scope.
     *
     * Try uncommenting the second implicit below, and see what happens.
     */
@@ -196,40 +198,61 @@ object ImplicitParameters extends Lesson {
 
   val spartacus = implicitly[Spartacus]
 
-  /** It's also possible to define implicit methods. These can require their own
-    * implicit parameter lists.
+  /** If you compile, you'd see the following `ambiguous implicit values` error:
+    *
+    * {{{
+    *   ambiguous implicit values:
+    * both value noIAmSpartacus in object ImplicitParameters of type course.m1_basics.ImplicitParameters.Spartacus
+    * and value iAmSpartacus in object ImplicitParameters of type course.m1_basics.ImplicitParameters.Spartacus
+    * match expected type course.m1_basics.ImplicitParameters.Spartacus
+    * }}}
     */
-
-  implicit def implicitBoolean(implicit double: Double): Boolean =
-    double > 99.99
-
-  def getImplicitBoolean(implicit boolean: Boolean) =
-    s"The implicit Boolean is: $boolean"
-
-  implicit val implicitDouble: Double = 55.0
-
-  getImplicitBoolean
 
   /** ✏ EXERCISE
     *
-    * Complete the unfinished method below.
+    * It's also possible to define implicit methods. These can require their own
+    * implicit parameter lists, potentially firing off other implicit searches.
+    * How exciting!
+    *
+    * By only changing the value of `implicitDouble`, see if you can get the
+    * test to pass.
     */
 
-  val implicitMethodsTest = test("implicitMethods") {
+  val implicitMethodTest = test("implicit methods") {
+    implicit def implicitBoolean(implicit double: Double): Boolean =
+      double > 99.99
+
+    implicit val disturbance: Double = 15.5 // <- Only change this value
+
+    def sense(implicit boolean: Boolean): String =
+      if (boolean) "I sense a disturbance" else "Who wants to go get ice cream?"
+
+    assertTrue(sense == "I sense a disturbance")
+  }
+
+  /** ✏ EXERCISE
+    *
+    * Complete the unfinished method below to test your knowledge of implicit
+    * definitions.
+    */
+
+  val customImplicitMethodTest = test("custom implicit method") {
     final case class Name(string: String)
     final case class Age(int: Int)
     final case class Person(name: Name, age: Age)
 
     implicit val name: Name = Name("Olive")
-    implicit val age: Age   = Age(30)
+    implicit val age: Age   = Age(32)
 
     implicit def implicitPerson: Person = ??? // <-- Finish this method
 
-    assertTrue(implicitPerson == Person(Name("Olive"), Age(30)))
+    assertTrue(implicitly[Person] == Person(Name("Olive"), Age(32)))
   }
 
   def exercise = suite("Implicits")(
+    implicitlyTest,
     tacitlyTest,
-    implicitlyTest
+    implicitMethodTest,
+    customImplicitMethodTest
   )
 }

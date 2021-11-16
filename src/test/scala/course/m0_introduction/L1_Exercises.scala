@@ -28,8 +28,9 @@ import zio.test.assertTrue
   * Welcome to the start of an exhilarating journey into mastering Scala, one of
   * the most powerful commercial programming languages there is. It will be
   * challenging, yet it will be immensely rewarding. We want to get you up and
-  * running quickly, following the Pareto principle: Which 20% of Scala's
-  * features will give us 80% of the benefits?
+  * running quickly, following the Pareto principle: Which subset of Scala's
+  * many features will give us the most power now, while also setting us up to
+  * learn the rest?
   *
   * This repository is broken into modules (you're currently in module 0, the
   * introduction)
@@ -134,6 +135,16 @@ object L1_Exercises extends Lesson {
     */
 
   val fillInTheType = "What am I?"
+
+  /** ☃︎ EXAMPLE
+    *
+    * Sometimes, there will be examples. Will likely have some explanation, and
+    * are just used to clearly express an idea or feature of the language. As
+    * always, feel free to experiment or modify these.
+    */
+
+  val `if you surround an identifier in back ticks, you con do crazy things` =
+    "cool."
 
   // All Exercises
   def exercise = suite("Sealed Traits")(
