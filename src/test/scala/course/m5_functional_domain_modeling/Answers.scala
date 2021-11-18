@@ -1,31 +1,31 @@
 package course.m5_functional_domain_modeling
 
-/** .___________. __    __   _______         ___      .__   __.      _______.____    __    ____  _______ .______          _______.
-  * |           ||  |  |  | |   ____|       /   \     |  \ |  |     /       |\   \  /  \  /   / |   ____||   _  \        /       |
-  * `---|  |----`|  |__|  | |  |__         /  ^  \    |   \|  |    |   (----` \   \/    \/   /  |  |__   |  |_)  |      |   (----`
-  *    |  |     |   __   | |   __|       /  /_\  \   |  . `  |     \   \      \            /   |   __|  |      /        \   \
-  *    |  |     |  |  |  | |  |____     /  _____  \  |  |\   | .----)   |      \    /\    /    |  |____ |  |\  \----.----)   |
-  *    |__|     |__|  |__| |_______|   /__/     \__\ |__| \__| |_______/        \__/  \__/     |_______|| _| `._____|_______/
+// .___________. __    __   _______         ___      .__   __.      _______.____    __    ____  _______ .______          _______.
+//|           ||  |  |  | |   ____|       /   \     |  \ |  |     /       |\   \  /  \  /   / |   ____||   _  \        /       |
+//`---|  |----`|  |__|  | |  |__         /  ^  \    |   \|  |    |   (----` \   \/    \/   /  |  |__   |  |_)  |      |   (----`
+//   |  |     |   __   | |   __|       /  /_\  \   |  . `  |     \   \      \            /   |   __|  |      /        \   \
+//   |  |     |  |  |  | |  |____     /  _____  \  |  |\   | .----)   |      \    /\    /    |  |____ |  |\  \----.----)   |
+//   |__|     |__|  |__| |_______|   /__/     \__\ |__| \__| |_______/        \__/  \__/     |_______|| _| `._____|_______/
+
+/** HEY! Go away! These are the answers :P
   *
-  * HEY! Go away! These are the answers :P You don't want to cheat, do you?
+  * HEY! Go away! These are the answers :P
   *
-  * HEY! Go away! These are the answers :P You don't want to cheat, do you?
+  * HEY! Go away! These are the answers :P
   *
-  * HEY! Go away! These are the answers :P You don't want to cheat, do you?
+  * HEY! Go away! These are the answers :P
   *
-  * HEY! Go away! These are the answers :P You don't want to cheat, do you?
+  * HEY! Go away! These are the answers :P
   *
-  * HEY! Go away! These are the answers :P You don't want to cheat, do you?
+  * HEY! Go away! These are the answers :P
   *
-  * HEY! Go away! These are the answers :P You don't want to cheat, do you?
+  * HEY! Go away! These are the answers :P
   *
-  * HEY! Go away! These are the answers :P You don't want to cheat, do you?
+  * HEY! Go away! These are the answers :P
   *
-  * HEY! Go away! These are the answers :P You don't want to cheat, do you?
+  * HEY! Go away! These are the answers :P
   *
-  * HEY! Go away! These are the answers :P You don't want to cheat, do you?
-  *
-  * HEY! Go away! These are the answers :P You don't want to cheat, do you?
+  * HEY! Go away! These are the answers :P
   *
   * HEY! Go away! These are the answers :P
   *

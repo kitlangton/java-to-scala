@@ -138,9 +138,9 @@ object L1_Exercises extends Lesson {
 
   /** ☃︎ EXAMPLE
     *
-    * Sometimes, there will be examples. Will likely have some explanation, and
-    * are just used to clearly express an idea or feature of the language. As
-    * always, feel free to experiment or modify these.
+    * There will also be examples. These will have some explanatory text along
+    * with code, and are used to exemplify a concept or a feature of the
+    * language. As always, feel free to experiment with or modify these.
     */
 
   val `if you surround an identifier in back ticks, you con do crazy things` =

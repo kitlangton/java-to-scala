@@ -19,7 +19,7 @@ lazy val root = (project in file("."))
       "UTF-8",
       "-Xlint",
       "-Xverify",
-      "-Xfatal-warnings",
+//      "-Xfatal-warnings",
       "-feature",
       "-language:_",
       "-Wconf:cat=unused:info"
