@@ -6,16 +6,11 @@ import zio.test.assertTrue
 
 /** TRAITS
   *
-  *   - Simple traits
-  *   - Using new to create an instance
-  *   - Extending a trait
-  *   - Extending multiple traits
-  *
   * Traits are tool for creating abstractions in Scala, similar to Java
   * interfaces. They're used to define a set of related definitions, without
   * requiring implementations.
   */
-object Traits extends Lesson {
+object L1_Traits extends Lesson {
 
   // A trait definition
   trait Pokeable {
