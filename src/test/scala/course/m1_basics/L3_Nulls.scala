@@ -37,9 +37,9 @@ object NullBasics extends Lesson {
     def fromNullable[A](a: A): Option[A] =
       ???
 
-    val nullInt = null.asInstanceOf[Int]
+    val nullString = null.asInstanceOf[String]
 
-    assertTrue(fromNullable(nullInt) == None && fromNullable(42) == Some(42))
+    assertTrue(fromNullable(nullString) == None && fromNullable(42) == Some(42))
   } @@ ignore
 
   /** ✏ EXERCISE
@@ -88,7 +88,7 @@ object NullBasics extends Lesson {
     * Implement the function `firstOf`, which can combine two options into a
     * single option by using the first available value.
     */
-  val oneOfTest = test("oneOf") {
+  val oneOfTest = test("firstOf") {
     def firstOf[A](left: Option[A], right: Option[A]): Option[A] =
       ???
 

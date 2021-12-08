@@ -297,52 +297,38 @@ object PredicateExercise {
     // # CONSTRUCTORS
     // Constructors are ways to create a type.
 
-    val always: Predicate[Any] = { _ => true }
+    val always: Predicate[Any] = ???
 
-    val never: Predicate[Any] = { _ => false }
+    val never: Predicate[Any] = ???
 
-    // A => A => Boolean
-    def equalTo[A](value: A): Predicate[A] = { a => value == a }
+    def equalTo[A](value: A): Predicate[A] = ???
 
-    // lessThan:  Predicate[Int]
-    def lessThan(value: Int): Predicate[Int] = { a => a < value }
+    def lessThan(value: Int): Predicate[Int] = ???
 
-    def greaterThan(value: Int): Predicate[Int] = { a => a > value }
+    def greaterThan(value: Int): Predicate[Int] = ???
 
-    def between(lower: Int, upper: Int): Predicate[Int] =
-      and(lessThan(upper), greaterThan(lower))
+    def between(lower: Int, upper: Int): Predicate[Int] = ???
 
-    def outside(lower: Int, upper: Int): Predicate[Int] =
-      and(lessThan(lower), greaterThan(upper))
+    def outside(lower: Int, upper: Int): Predicate[Int] = ???
 
     // # COMBINATORS
     // Combinators are ways to combine a type.
 
-    def and[A](p1: Predicate[A], p2: Predicate[A]): Predicate[A] = { a => (p1(a) && p2(a)) }
+    def and[A](p1: Predicate[A], p2: Predicate[A]): Predicate[A] = ???
 
-    def or[A](p1: Predicate[A], p2: Predicate[A]): Predicate[A] = a => (p1(a) || p2(a))
-
-  }
-
-  implicit class ParserExtensionMethods[A](self: Predicate[A]) {
-
-    def or(other: Predicate[A]): Predicate[A] = Predicate.or(self, other)
-
-    def and(other: Predicate[A]): Predicate[A] = Predicate.and(self, other)
-
-    // function composition
-    // building up a huge stack of nested functions
-    // each of which modifies the behavior slightly
-    // constructing a huge pipeline of functions
-    def negate: Predicate[A] = { a => !self(a) }
+    def or[A](p1: Predicate[A], p2: Predicate[A]): Predicate[A] = ???
 
   }
 
-  val intPredicate  = Predicate.or(Predicate.equalTo(42), Predicate.between(100, 200))
-  val intPredicate2 = Predicate.equalTo(42) or Predicate.between(100, 200)
+  val intPredicate = Predicate.or(Predicate.equalTo(42), Predicate.between(100, 200))
+
+  def printPredicate[A](predicate: Predicate[A], value: A): Unit = {
+    val result = predicate(value)
+    println(s"$value is $result")
+  }
 
   def main(args: Array[String]): Unit =
-    println("hi")
+    printPredicate(intPredicate, 42)
 
 }
 

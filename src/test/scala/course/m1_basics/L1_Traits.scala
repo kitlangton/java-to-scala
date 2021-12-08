@@ -133,6 +133,44 @@ object L1_Traits extends Lesson {
     def poke: String = s"Do you know who you're poking? You're poking $name!"
   }
 
+  /** ☃︎ EXAMPLE
+    *
+    * It is possible to define default implementations, which may or may not
+    * leverage other methods on the trait.
+    */
+
+  trait Introducable {
+    val name: String
+
+    def introduce(): Unit = println(s"Hi, I'm $name!")
+  }
+
+  /** ☃︎ EXERCISE
+    *
+    * Create the missing constructors for the Iterator trait. This is not a
+    * functional construct, but will get us acquainted with polymorphic traits.
+    *
+    * Quoting the Scala language reference:
+    *
+    * "Iterators are data structures that allow to iterate over a sequence of
+    * elements. They have a hasNext method for checking if there is a next
+    * element available, and a next method which returns the next element and
+    * advances the iterator."
+    *
+    * "An iterator is mutable: most operations on it change its state. While it
+    * is often used to iterate through the elements of a collection, it can also
+    * be used without being backed by any collection"
+    */
+  trait Iterator[A] {
+    def hasNext: Boolean
+    def next(): A
+  }
+
+  object Iterator {
+    def fromArray[A](array: Array[A]): Iterator[A] = ??? // <- EDIT HERE
+    def fill[A](n: Int)(element: A): Iterator[A]   = ??? // <- EDIT HERE
+  }
+
   def exercise =
     suite("Traits")(
       pokeableTest,
