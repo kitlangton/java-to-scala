@@ -18,7 +18,7 @@ object NullBasics extends Lesson {
   /** ✏ EXERCISE
     *
     * The `parentOf` function returns `null` for some paths. Modify the function
-    * to return `Option[File]` rather than `File | Null`.
+    * to return `Option[String]` rather than `File | Null`.
     */
   val applyTest = test("apply") {
     import java.io.File
@@ -26,7 +26,7 @@ object NullBasics extends Lesson {
     def parentOf(file: String) = new File(file).getParent
 
     assertTrue(parentOf("") != null)
-  } @@ ignore
+  }
 
   /** ✏ EXERCISE
     *
@@ -39,8 +39,11 @@ object NullBasics extends Lesson {
 
     val nullString = null.asInstanceOf[String]
 
-    assertTrue(fromNullable(nullString) == None && fromNullable(42) == Some(42))
-  } @@ ignore
+    assertTrue(
+      fromNullable(nullString) == None,
+      fromNullable(0) == Some(0)
+    )
+  }
 
   /** ✏ EXERCISE
     *
@@ -68,7 +71,10 @@ object NullBasics extends Lesson {
 
     def convert(o: Option[Int]): Option[Char] = ???
 
-    assertTrue(convert(option) == Some(42.toChar))
+    assertTrue(
+      convert(option) == Some(42.toChar),
+      convert(Option.empty[Int]) == None
+    )
   } @@ ignore
 
   /** ✏ EXERCISE
@@ -80,7 +86,12 @@ object NullBasics extends Lesson {
     def both[A, B](left: Option[A], right: Option[B]): Option[(A, B)] =
       ???
 
-    assertTrue(both(Some(42), Some(24)) == Some((42, 24)))
+    assertTrue(
+      both(Some(42), Some(24)) == Some((42, 24)),
+      both(None, Some(24)) == None,
+      both(None, None) == None,
+      both(Some(24), None) == None
+    )
   } @@ ignore
 
   /** ✏ EXERCISE
@@ -88,11 +99,16 @@ object NullBasics extends Lesson {
     * Implement the function `firstOf`, which can combine two options into a
     * single option by using the first available value.
     */
-  val oneOfTest = test("firstOf") {
+  val firstOfTest = test("firstOf") {
     def firstOf[A](left: Option[A], right: Option[A]): Option[A] =
       ???
 
-    assertTrue(firstOf(None, Some(24)) == Some(24))
+    assertTrue(
+      firstOf(None, Some(24)) == Some(24),
+      firstOf(Some(24), Some(23)) == Some(24),
+      firstOf(Some(24), None) == Some(24),
+      firstOf(Option.empty[Int], Option.empty[Int]) == None
+    )
   } @@ ignore
 
   /** ✏ EXERCISE
@@ -107,8 +123,12 @@ object NullBasics extends Lesson {
     def chain[A, B](first: Option[A], andThen: A => Option[B]): Option[B] =
       ???
 
-    assertTrue(chain(Some(42), (x: Int) => if (x < 10) None else Some(x)) == Some(42))
-  } @@ ignore
+    assertTrue(
+      chain(Some(42), (x: Int) => if (x < 10) None else Some(x)) == Some(42),
+      chain(Some(5), (x: Int) => if (x < 10) None else Some(x)) == None,
+      chain(None, (x: Int) => if (x < 10) None else Some(x)) == None
+    )
+  }
 
   /** ✏ EXERCISE
     *
@@ -146,7 +166,7 @@ object NullBasics extends Lesson {
       getOrElseTest,
       mapTest,
       bothTest,
-      oneOfTest,
+      firstOfTest,
       chainTest,
       flatMapTest
     )
@@ -168,8 +188,13 @@ object MigrateFromNullToOption extends Lesson {
       def getBoolProperty(name: String): Option[Boolean] = ???
     }
 
-    assertTrue(SafeProperty.getProperty("foo.bar") == None)
-  } @@ ignore
+    assertTrue(
+      SafeProperty.getProperty("foo.bar") == None,
+      SafeProperty.getIntProperty("foo.bar") == None,
+      SafeProperty.getBoolProperty("foo.bar") == None,
+      SafeProperty.getProperty("user.dir").isDefined
+    )
+  }
 
   /** ✏ EXERCISE
     *

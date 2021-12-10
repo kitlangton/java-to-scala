@@ -4,7 +4,7 @@ import course.Guess.guessType
 import course.Lesson.???
 import course.SomeType.same
 import course.{Guess, Lesson}
-import zio.test.TestAspect._
+import zio.test.TestAspect.ignore
 import zio.test._
 
 /** Functions are fundamental to functional programming. In a functional
