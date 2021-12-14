@@ -3,6 +3,7 @@ package course.m5_functional_domain_modeling
 import course.Lesson
 import zio.test.TestAspect.ignore
 import zio.test.assertTrue
+import java.util.UUID
 
 // ███████╗███████╗ █████╗ ██╗     ███████╗██████╗     ████████╗██████╗  █████╗ ██╗████████╗███████╗
 // ██╔════╝██╔════╝██╔══██╗██║     ██╔════╝██╔══██╗    ╚══██╔══╝██╔══██╗██╔══██╗██║╚══██╔══╝██╔════╝
@@ -177,19 +178,88 @@ object L1_SealedTraits extends Lesson {
 
   /** ✏ EXERCISE
     *
-    * Create a sealed trait `Country` that is extended by case objects `UK`,
-    * `Germany`, `India`, `Netherlands`, and `USA`.
+    * Add the following cases to this `Direction` sealed trait:
+    *   - Up, Down, Left, Right
+    *
+    * Then, implement the methods on the trait using exhaustive pattern
+    * matching.
     */
-  trait Country // <- Finish defining this sealed trait
-  object UK
-  object USA
+  sealed trait Direction {
+    def turnRight: Direction = ???
 
-  val testCountry = test("create your own") {
-    def isCountry(a: Any) = a.isInstanceOf[Country]
+    def turnLeft: Direction = ???
+
+    def flip: Direction = ???
+  }
+
+  object Direction {
+    // ADD THE CASES HERE
+  }
+
+  val testDirection =
+    test("Direction") {
+      import Direction._
+
+      lazy val anyDirection: Direction = ??? // <- Instantiate a Direction here
+
+      // Uncomment these once they've been implemented
+//      lazy val down: Direction  = Down
+//      lazy val up: Direction    = Up
+//      lazy val left: Direction  = Left
+//      lazy val right: Direction = Right
+
+      assertTrue(
+        anyDirection.turnRight.turnRight.turnRight.turnRight == anyDirection,
+        anyDirection.turnRight.turnLeft == anyDirection,
+        anyDirection.flip.flip == anyDirection
+//        up.flip == down,
+//        right.flip == left,
+//        right.turnRight == down,
+      )
+    } @@ ignore
+
+  /** ✏ EXERCISE
+    *
+    * Complete the following User sealed trait that contains the following
+    * cases:
+    *   - RegisteredUser that has a UUID id and a String email address
+    *   - GuestUser which has no parameters
+    *
+    * Then complete the missing implementations of `identifier`, `guest`, and
+    * `user`.
+    */
+
+  trait User {
+
+    /** This should return the User's email address if they're registered, or
+      * "Guest" if they're a guest.
+      */
+    def identifier: String = ???
+
+  }
+
+  object User {
+    // 1. CREATE THE CASES
+
+    // 2. COMPLETE THE FOLLOWING CONSTRUCTORS
+
+    /** Creates a Guest user.
+      */
+    val guest: User = ???
+
+    /** Creates a registered user with the given email address and a random
+      * UUID.
+      */
+    def apply(email: String): User = ???
+  }
+
+  val testUser = test("User") {
+    val registered = User("martin@scala.com")
+    val guest      = User.guest
 
     assertTrue(
-      isCountry(UK),
-      isCountry(USA)
+      registered.identifier == "martin@scala.com",
+      guest.identifier == "Guest"
     )
   } @@ ignore
 
@@ -198,7 +268,8 @@ object L1_SealedTraits extends Lesson {
     testPlanet,
     testStringPlanet,
     testMatchExhaustive,
-    testCountry
+    testDirection,
+    testUser
   )
 
 }
