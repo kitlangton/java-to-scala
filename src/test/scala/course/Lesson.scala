@@ -1,9 +1,11 @@
 package course
 
+import zio.{Task, ZIO}
 import zio.test._
 import zio.test.environment.TestEnvironment
 
 import scala.annotation.implicitNotFound
+import scala.concurrent.Future
 
 trait Lesson extends DefaultRunnableSpec {
   type ???
@@ -11,6 +13,11 @@ trait Lesson extends DefaultRunnableSpec {
   def exercise: ZSpec[TestEnvironment, Any]
 
   override def spec: ZSpec[TestEnvironment, Any] = exercise
+
+  def testFuture[A](future: Future[A])(f: Either[Throwable, A] => Assert): Task[Assert] =
+    ZIO.fromFuture(_ => future).either.map { result =>
+      f(result)
+    }
 }
 
 object Lesson {

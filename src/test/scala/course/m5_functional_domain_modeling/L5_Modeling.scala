@@ -64,10 +64,10 @@ object L5_Modeling extends Lesson {
 
   /** ✏ EXERCISE
     *
-    * Create a precise data model for a user's cryptocurrency portfolio.
+    * Create a precise data model for a user's stock portfolio.
     */
-  val testCrypto =
-    test("crypto") {
+  val testPortfolio =
+    test("portfolio") {
       final case class Portfolio() { // <- Complete this type
         def add(symbol: Symbol, amount: Double): Portfolio = ???
       }
@@ -78,13 +78,13 @@ object L5_Modeling extends Lesson {
 
       type Symbol = ??? // <- Complete this type
 
-      def ETH: Symbol  = ???
-      def BTC: Symbol  = ???
-      def DOGE: Symbol = ???
+      def AAPL: Symbol = ???
+      def MSFT: Symbol = ???
+      def GOOG: Symbol = ???
 
-      val p1 = Portfolio.empty.add(ETH, 1.0).add(ETH, 1.0).add(BTC, 2.0)
-      val p2 = Portfolio.empty.add(BTC, 2.0).add(ETH, 2.0)
-      val p3 = Portfolio.empty.add(DOGE, 9999.0)
+      val p1 = Portfolio.empty.add(AAPL, 1.0).add(AAPL, 1.0).add(MSFT, 2.0)
+      val p2 = Portfolio.empty.add(MSFT, 2.0).add(AAPL, 2.0)
+      val p3 = Portfolio.empty.add(GOOG, 9999.0)
 
       assertTrue(
         p1 == p2,
@@ -94,26 +94,69 @@ object L5_Modeling extends Lesson {
 
   /** ✏ EXERCISE
     *
-    * Create a precise data model for a subscription for a SaaS product, which
-    * could be at the annual or monthly level, and which could bundle different
-    * features into the plan.
+    * Migrate this imprecise data model to a precise data model comprised of
+    * sealed traits and case classes, replacing nullable fields and throwing
+    * methods with type-safe analogues.
     */
-  val testSubscription =
-    test("subscription") {
-      type Features     = ???
-      type Subscription = ???
-      def makeFeatures(space: Int, sso: Boolean, customLogo: Boolean): Features = ???
-      def makeMonthly(amount: Double, features: Features): Subscription         = ???
-      def makeAnnual(amount: Double, features: Features): Subscription          = ???
+  class S3Config(val accessKey: String, val bucket: String)
+  class LocalConfig(val path: String)
 
-      val features = makeFeatures(2048, true, true)
+  class ParsedConfig(
+      configType: String,
+      s3Config: S3Config,
+      localConfig: LocalConfig
+  ) {
+    def connect(): Unit =
+      if (configType == "s3")
+        println(s"Connecting to S3 bucket ${s3Config.bucket}")
+      else
+        println(s"Connecting to local file system at ${localConfig.path}")
+  }
 
-      def costPerMonth(subscription: Subscription): Double = ???
+  object ParsedConfig {
+    def load(data: Map[String, String]): ParsedConfig =
+      data("configType") match {
+        case "s3" =>
+          val s3Config = new S3Config(data("accessKey"), data("bucket"))
+          new ParsedConfig("s3", s3Config, null)
+        case "local" =>
+          val localConfig = new LocalConfig(data("path"))
+          new ParsedConfig("local", null, localConfig)
+      }
+  }
+
+  val testConfig =
+    test("Config") {
+      val s3Data = Map(
+        "configType" -> "s3",
+        "accessKey"  -> "123",
+        "bucket"     -> "bucket"
+      )
+
+      val localData = Map(
+        "configType" -> "local",
+        "path"       -> "/tmp/data"
+      )
+
+      val wrongData = Map(
+        "favoriteMovie" -> "The Matrix",
+        "favoriteFood"  -> "Pizza",
+        "favoriteColor" -> "Blue"
+      )
+
+//      ** UNCOMMENT THESE LINES **
+//      ===========================
+//      val s3Config: Option[Config] = ParsedConfig.load(s3Data)
+//      val localConfig: Option[Config] = ParsedConfig.load(localData)
+//      val wrongConfig: Option[Config] = ParsedConfig.load(wrongData)
 
       assertTrue(
-        makeMonthly(9.99, features) != makeAnnual(9.99, features),
-        costPerMonth(makeMonthly(9.99, features)) == 9.99,
-        costPerMonth(makeAnnual(120.00, features)) == 10.00
+//        ** UNCOMMENT THESE ASSERTIONS **
+//        ================================
+//        s3Config.get == S3Config("123", "bucket"),
+//        localConfig.get == LocalConfig("/tmp/data"),
+//        wrongConfig == None
+        true
       )
     } @@ ignore
 
@@ -121,8 +164,8 @@ object L5_Modeling extends Lesson {
     suite("Modeling")(
       testRelationshipStatus,
       testIceCream,
-      testCrypto,
-      testSubscription
+      testPortfolio,
+      testConfig
     )
 }
 
@@ -156,12 +199,12 @@ object FunctionalCounter {
     * This is comprised of immutable data, which contains pure methods that
     * generate subsequent states based upon input.
     */
-  final case class Model(count: Int) {
+  final case class State(count: Int) {
 
     /** Process the action and create a modified copy which represents the next
-      * iteration of the Model.
+      * iteration of the State.
       */
-    def process(action: Action): Model = ???
+    def process(action: Action): State = ???
 
     /** Use the current state to render a user-readable string that will be
       * printed to the console.
@@ -169,8 +212,8 @@ object FunctionalCounter {
     def render: String = ???
   }
 
-  object Model {
-    def empty: Model = Model(0)
+  object State {
+    def empty: State = State(0)
   }
 
   sealed trait Action
@@ -205,10 +248,11 @@ object FunctionalCounter {
     * explicit mutability.
     */
   def gameLoop(): Unit = {
-    var state = Model.empty
+    var state = State.empty
     var loop  = true
     while (loop) {
       println(state.render)
+      print("> ")
       Action.fromString(StdIn.readLine()) match {
         case Succeed(action) => state = state.process(action)
         case Fail            => loop = false
@@ -246,12 +290,17 @@ object TicTacToe {
 
     def render: String = ???
 
-    def nextState(move: Move): State = ???
+    def nextState(action: Action): State = ???
   }
 
-  type Move = ???
-  object Move {
-    def fromString(string: String): Move = ???
+  object State {
+    val empty: State = ??? // <- Complete this definition
+  }
+
+  type Action = ??? // <- Complete this type
+
+  object Action {
+    def fromString(string: String): Option[Action] = ???
   }
 
   /** The Imperative Shell.
@@ -260,13 +309,21 @@ object TicTacToe {
     * the game state.
     */
   def main(args: Array[String]): Unit = {
-    var state = State()
-    while (state.isActive) {
+    @tailrec
+    def loop(state: State): Unit = {
       println(state.render)
-      val move = Move.fromString(StdIn.readLine())
-      state = state.nextState(move)
+      print("> ")
+      if (state.isActive)
+        Action.fromString(StdIn.readLine()) match {
+          case Some(action) =>
+            loop(state.nextState(action))
+          case None =>
+            println(s"Invalid input! Try again.")
+            loop(state)
+        }
     }
-    println(state.render)
+
+    loop(State.empty)
   }
 }
 
