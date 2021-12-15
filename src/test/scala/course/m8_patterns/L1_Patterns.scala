@@ -102,6 +102,51 @@ object ReifyingThePattern extends App {
   type Monoid = ???
 }
 
+object UsingTheMonoid extends App {
+
+  final case class Student(name: String)
+
+  final case class Subject(name: String)
+
+  val classAssignments1 =
+    Map(
+      Subject("Math")    -> Set(Student("John"), Student("Mary")),
+      Subject("English") -> Set(Student("John"), Student("Mary"), Student("Shishu"))
+    )
+
+  val classAssignments2 =
+    Map(
+      Subject("Math")    -> Set(Student("George"), Student("Mary"), Student("Jorge")),
+      Subject("English") -> Set(Student("Peter"), Student("Mary"), Student("Fitzpatrick"))
+    )
+
+  val combined = classAssignments1 ++ classAssignments2
+
+  println(combined.mkString("\n"))
+
+  // implement a method that merges maps of sets
+  def merge[A, B](map1: Map[A, Set[B]], map2: Map[A, Set[B]]): Map[A, Set[B]] =
+    map2.foldLeft(map1) { case (acc, (k, v)) =>
+      acc.updated(k, acc.getOrElse(k, Set()) ++ v)
+    }
+
+  println(merge(classAssignments1, classAssignments2).mkString("\n"))
+
+  final case class School(name: String)
+
+  val school1 =
+    Map(
+      School("St. Peters") -> classAssignments1
+    )
+
+  val school2 =
+    Map(
+      School("St. Peters") -> classAssignments2
+    )
+
+  // How do we deal with this!?
+}
+
 /** Other patterns:
   *   - Types with a `map` method
   *   - Types with a `flatMap` method
