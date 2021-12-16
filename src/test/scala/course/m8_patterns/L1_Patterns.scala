@@ -122,7 +122,18 @@ object UsingTheMonoid extends App {
 
   val combined = classAssignments1 ++ classAssignments2
 
+  println("BROKEN MERGED CLASS ASSIGNMENTS")
   println(combined.mkString("\n"))
+
+  // ======
+  // ======
+  // ======
+  // ======
+  // PART 2
+  // ======
+  // ======
+  // ======
+  // ======
 
   // implement a method that merges maps of sets
   def merge[A, B](map1: Map[A, Set[B]], map2: Map[A, Set[B]]): Map[A, Set[B]] =
@@ -130,7 +141,18 @@ object UsingTheMonoid extends App {
       acc.updated(k, acc.getOrElse(k, Set()) ++ v)
     }
 
-  println(merge(classAssignments1, classAssignments2).mkString("\n"))
+//  println("\nRECURSIVELY MERGED CLASS ASSIGNMENTS")
+//  println(merge(classAssignments1, classAssignments2).mkString("\n"))
+
+  // ======
+  // ======
+  // ======
+  // ======
+  // PART 3
+  // ======
+  // ======
+  // ======
+  // ======
 
   final case class School(name: String)
 
@@ -144,6 +166,10 @@ object UsingTheMonoid extends App {
       School("St. Peters") -> classAssignments2
     )
 
+  val mergedSchool = school1 ++ school2
+//  println("\nMERGED SCHOOLS")
+//  println(mergedSchool.mkString("\n"))
+
   // How do we deal with this!?
 }
 
@@ -152,3 +178,95 @@ object UsingTheMonoid extends App {
   *   - Types with a `flatMap` method
   *   - Types with a `zip` method
   */
+
+/** There are a set of common patterns, each with a fancier name than the last,
+  * which all deal with data types that either contain or produce values. Let's
+  * explore these producer patterns.
+  *
+  * But lets start by building some basic intuitions. Instead of thinking about
+  * some container of some type A—what can we do with type variables in general?
+  */
+object Parametricity extends App {
+  type A
+  type B
+
+  // 1.
+  // Ingredients
+  // -----------
+  val a1: A        = ???
+  val aToB: A => B = ???
+
+  val result1 = ???
+
+  // 2.
+  // Ingredients
+  // -----------
+  val someA: A = ???
+  val someB: B = ???
+
+  val result2 = ???
+}
+
+object Producers {
+
+  final case class Box[+A](value: A)
+
+  /** 1.
+    *
+    * If we have a container/producer of A, we can always just extract the value
+    * and then call a function on it, transforming it to a B.
+    */
+
+  // A
+  val stringBox: Box[String] = Box("What is the meaning of life?")
+
+  // A => B
+  val stringToInt: String => Int = _.length
+
+  // B
+  val int: Int = stringToInt(stringBox.value)
+
+  /** 2.
+    *
+    * Likewise, if we have two containers/producers of A and B, we can always
+    * pluck out each value and then combine them.
+    */
+
+  // A
+  val intBox: Box[Int] = Box(42)
+  // B
+  val boolBox: Box[Boolean] = Box(true)
+
+  // (A, B)
+  val intAndBoolean: (Int, Boolean) = (intBox.value, boolBox.value)
+
+  /** So, instead of unpacking this container. Why not just transform the
+    * container without unpacking/repacking it?
+    */
+
+  final case class Vessel[A](value: A) {
+    def map[B](f: A => B): Vessel[B] =
+      Vessel(f(value))
+
+    def zip[B](that: Vessel[B]): Vessel[(A, B)] =
+      Vessel((value, that.value))
+  }
+
+  val stringVessel: Vessel[String] = Vessel("What is the meaning of life?")
+  val mappedVessel: Vessel[Int]    = stringVessel.map(_.length)
+
+  val intVessel: Vessel[Int]      = Vessel(42)
+  val boolVessel: Vessel[Boolean] = Vessel(true)
+
+  val zippedVessel: Vessel[(Int, Boolean)] =
+    intVessel.zip(boolVessel)
+
+  // - Explore the same concept with a Producer
+
+}
+
+object Generalizing {
+  // 1. Create a type class for structures that can be mapped
+
+  // 2. Create a type class for structures that can be zipped
+}

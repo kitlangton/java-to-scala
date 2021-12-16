@@ -9,27 +9,26 @@ import scala.concurrent.{Await, Future}
 import FutureUtils._
 import zio.test.TestAspect.{ignore, nonFlaky}
 
-object LazyVal extends App {
+object LazyObject {
+  val name = {
+    println("INITIALIZING LAZY OBJECT `name`")
+    "George Wilkerson"
+  }
+}
 
+object LazyVal extends App {
   val name = {
     println("INITIALIZING `name`")
     "George Wilkerson"
   }
-
-  println(name)
 }
 
 object ByNameParameters extends App {
 
-  // What is wrong with this?
-  def ifElse(cond: Boolean, onTrue: Any, onFalse: Any): Unit =
-    if (true) onTrue else onFalse
+  def ifElse[A](cond: Boolean, onTrue: => A, onFalse: => A): A =
+    if (cond) onTrue else onFalse
 
-  ifElse(
-    cond = true,
-    onTrue = println("IT'S TRUE"),
-    onFalse = println("IT'S FALSE")
-  )
+  ifElse(true, println("IT'S TRUE"), println("IT'S FALSE"))
 
 }
 
@@ -42,16 +41,36 @@ object FutureExample1 extends App {
     * body completes.
     */
   val future: Future[String] = Future {
+    debugThread("future")
     println("Starting future!")
     Thread.sleep(1000)
     println("Completing future!")
     "Hello"
   }
 
+  val result: Future[Int] =
+    future
+      .map { string =>
+        debugThread("map")
+        println(s"Got result: $string")
+        string.toIntOption
+      }
+      .flatMap { optionInt =>
+        Future {
+          println("Starting Get or Else")
+          debugThread("getOrElse")
+          Thread.sleep(1000)
+          println("Completing Get or Else")
+          optionInt.getOrElse(0)
+        }
+      }
+
+  debugThread("main")
+
   /** We must wait for the future to complete, otherwise the program will exit.
     * This is because the app will exit when the main thread finishes.
     */
-  Await.result(future, Duration.Inf)
+  Await.result(result, Duration.Inf)
 }
 
 object FutureComposition extends App {
@@ -127,9 +146,13 @@ object WebRequests extends App {
 
   // Make an HTTP Get Request in Java Synchronously
   def getUrl(url: String): String = {
+    println(s"\nDownloading $url!")
+    Thread.sleep(2000)
     val source = scala.io.Source.fromURL(url)
     val lines  = source.mkString
     source.close()
+    println(s"Downloaded $url!")
+    Thread.sleep(500)
     lines
   }
 
@@ -138,9 +161,16 @@ object WebRequests extends App {
     getUrl(url)
   }
 
-  val cool = getUrl("https://www.wikipedia.com")
+  val url1 = getUrl(
+    "https://gist.githubusercontent.com/kitlangton/478a1b57a95cd57a5154c3897d3d3090/raw/88cd025b5cbd581c421f581e26f484d6298178cd/gistfile1.txt"
+  )
 
-  println(cool)
+  val url2 = getUrl(
+    "https://gist.githubusercontent.com/kitlangton/3b8f2063ce2bc72467bc3d86aea91d2f/raw/41f686dc749eda789e578e42f13970ee6c93b4f6/idea-live-templates.xml"
+  )
+
+  println(s"URL 1 Length: ${url1.length}")
+  println(s"URL 2 Length: ${url2.length}")
 
 }
 
@@ -182,7 +212,6 @@ object L1_Future extends Lesson {
     *
     * Use `Future#recover` to recover from a failed future.
     */
-
   val testRecover = suite("recover")(
     testM("recover") {
 
@@ -202,10 +231,68 @@ object L1_Future extends Lesson {
     } @@ nonFlaky
   ) @@ ignore
 
+  /** ✏ EXERCISE
+    *
+    * Use a for comprehension to compose the existing functions to download the
+    * contents of a URL, save it to the "database", and return its line count.
+    */
+  def downloadData(url: String): Future[String] =
+    Future {
+      println(s"Downloading $url...")
+      val source = scala.io.Source.fromURL(url)
+      val lines  = source.mkString
+      source.close()
+      println(s"Downloaded $url!")
+      lines
+    }
+
+  def asyncLineCount(text: String): Future[Int] =
+    Future {
+      println(s"Counting lines...")
+      Thread.sleep(1000)
+      println(s"Counted lines!")
+      text.split("\n").length
+    }
+
+  def saveToDatabase(text: String): Future[Unit] =
+    Future {
+      println(s"Saving text to database...")
+      Thread.sleep(1000)
+      println(s"Saved text to database!")
+      database = Some(text)
+    }
+
+  private var database: Option[String] = None
+
+  val testForComprehension = suite("for comprehension")(
+    testM("for comprehension") {
+
+      val url =
+        "https://gist.githubusercontent.com/kitlangton/478a1b57a95cd57a5154c3897d3d3090/raw/88cd025b5cbd581c421f581e26f484d6298178cd/gistfile1.txt"
+
+      // COMPLETE THIS DEFINITION USING A FOR COMPREHENSION
+      // HINT: Use `downloadData`, `asyncLineCount`, and `saveToDatabase`
+      val future: Future[Int] = ???
+
+      testFuture(future) { result =>
+        assertTrue(
+          result.right.get == 3,
+          database.get ==
+            """
+What a beautiful file.
+That's great.
+One more line will do. 
+""".trim
+        )
+      }
+    }
+  )
+
   override def exercise =
     suite("Future")(
       testSuccessful,
       testFailed,
-      testRecover
+      testRecover,
+      testForComprehension
     )
 }
