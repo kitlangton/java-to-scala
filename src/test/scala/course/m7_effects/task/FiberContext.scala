@@ -1,129 +1,166 @@
 package course.m7_effects.task
 
-import java.util.concurrent.atomic.AtomicReference
+import java.util.concurrent.atomic.{AtomicBoolean, AtomicReference}
 import scala.annotation.tailrec
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext
 import scala.util.Try
 import scala.util.control.NonFatal
 
+sealed trait Cause
+
+object Cause {
+  final case class Die(throwable: Throwable) extends Cause
+  case object Interrupt                      extends Cause
+}
+
 sealed trait FiberState[A] extends Product with Serializable
 
 object FiberState {
   def empty[A]: FiberState[A] = Executing(Nil)
 
-  final case class Completed[A](value: A)                   extends FiberState[A]
-  final case class Executing[A](callbacks: List[A => Unit]) extends FiberState[A]
+  final case class Completed[A](value: Exit[A])                  extends FiberState[A]
+  final case class Executing[A](callbacks: List[Exit[A] => Any]) extends FiberState[A]
 }
 
 trait Fiber[+A] {
+  def interrupt: Task[Unit]
+
   def join: Task[A]
 }
 
 class FiberContext[A](task: Task[A]) extends Fiber[A] {
-
   type ErasedTask = Task[Any]
   type Cont       = Any => ErasedTask
+
+  val isInterrupted   = new AtomicBoolean(false)
+  val isInterrupting  = new AtomicBoolean(false)
+  val isInterruptible = new AtomicBoolean(true)
+
+  def shouldInterrupt(): Boolean =
+    isInterrupted.get() && isInterruptible.get() && !isInterrupting.get()
+
+  val result: AtomicReference[FiberState[A]] =
+    new AtomicReference(FiberState.empty[A])
+
   val stack: mutable.Stack[Cont] =
     scala.collection.mutable.Stack.empty[Cont]
 
-  var currTask: ErasedTask =
-    task.asInstanceOf[ErasedTask]
-
-  def continue(result: Any): Unit =
+  def nextTask(result: Any): ErasedTask =
     if (stack.isEmpty) {
       complete(Exit.Success(result.asInstanceOf[A]))
-      currTask = null
+      null
     } else {
       val cont = stack.pop()
-      currTask = cont(result)
+      cont(result)
     }
 
-  def fail(throwable: Throwable): Unit = {
-    complete(Exit.Failure(throwable))
-    currTask = null
-  }
+  def fail(cause: Cause): Any =
+    complete(Exit.Failure(cause))
 
-  def handleFailure(error: Throwable): Unit = {
+  def findNextErrorHandler(cause: Cause): ErasedTask = {
     @tailrec
-    def loop(cont: Cont): Unit =
-      if (cont eq null) {
-        fail(error)
-      } else if (cont.isInstanceOf[Task.Fold[_, _]]) {
-        currTask = cont.asInstanceOf[Task.Fold[Any, Any]].onFailure(error)
-      } else {
-        loop(Try(stack.pop()).getOrElse(null))
+    def loop(): ErasedTask =
+      Try(stack.pop()).getOrElse(null) match {
+        case null =>
+          fail(cause)
+          null
+        case cont: Task.Fold[_, _] =>
+          cont.onFailure(cause)
+        case _ =>
+          loop()
       }
 
-    loop(Try(stack.pop()).getOrElse(null))
+    loop()
   }
 
-  def run(): Unit =
+  val isSuspended = new AtomicBoolean(false)
+
+  def run(task: ErasedTask): Unit = {
+    isSuspended.set(false)
+    var currTask: ErasedTask = task
     ExecutionContext.global.execute { () =>
       try while (currTask ne null)
-        currTask match {
-          case Task.Succeed(value) =>
-            continue(value())
+        if (shouldInterrupt()) {
+          isInterrupting.set(true)
+          stack.push(_ => currTask)
+          currTask = Task.Fail(Cause.Interrupt)
+        } else
+          currTask match {
+            case Task.Effect(value) =>
+              val result = value()
+              currTask = nextTask(result)
 
-          case Task.FlatMap(task, continuation) =>
-            stack.push(continuation.asInstanceOf[Cont])
-            currTask = task
+            case Task.FlatMap(task, continuation) =>
+              stack.push(continuation.asInstanceOf[Cont])
+              currTask = task
 
-          case Task.Fail(error) =>
-            handleFailure(error)
+            case Task.Fail(error) =>
+              currTask = findNextErrorHandler(error)
 
-          case Task.Async(register) =>
-            currTask = null
-            register {
-              case Exit.Success(value) =>
-                continue(value)
-                run()
-              case Exit.Failure(exception) =>
-                throw new RuntimeException(exception)
-            }
+            case Task.Async(register) =>
+              currTask = null
 
-          case fold @ Task.Fold(task, _, k) =>
-            stack.push(fold.asInstanceOf[Cont])
-            currTask = task
-        } catch {
+              register {
+                case Exit.Success(value) =>
+                  if (isSuspended.get()) {
+                    run(nextTask(value))
+                  } else {
+                    currTask = nextTask(value)
+                  }
+
+                case Exit.Failure(cause) =>
+                  run(Task.Fail(cause))
+              }
+              if (currTask == null)
+                isSuspended.set(true)
+
+            case fold @ Task.Fold(task, _, _) =>
+              stack.push(fold.asInstanceOf[Cont])
+              currTask = task
+
+            case Task.Fork(task) =>
+              currTask = Task.succeed(new FiberContext[Any](task))
+
+          } catch {
         case NonFatal(e) =>
-          handleFailure(e)
-          if (currTask ne null) run()
+          currTask = findNextErrorHandler(Cause.Die(e))
+//          run(task)
       }
     }
+  }
 
-  val result: AtomicReference[FiberState[Exit[A]]] =
-    new AtomicReference(FiberState.empty[Exit[A]])
+  def complete(value: Exit[A]): Unit =
+    result.get match {
+      case FiberState.Completed(_) =>
+        throw new Error("Fiber already completed")
 
-  def complete(value: Exit[A]): Unit = {
-    val current = result.get
-    current match {
-      case FiberState.Completed(_) => ()
-
-      case FiberState.Executing(callbacks) =>
-        if (result.compareAndSet(current, FiberState.Completed(value))) {
-          callbacks.foreach { cb =>
-            cb(value)
-          }
+      case oldState @ FiberState.Executing(callbacks) =>
+        if (result.compareAndSet(oldState, FiberState.Completed(value))) {
+          callbacks.foreach(cb => cb(value))
         } else
           complete(value)
     }
-  }
 
   @tailrec
-  final def addCallback(cb: Exit[A] => Unit): Unit = {
-    val current = result.get
-    current match {
+  final def await(cb: Exit[A] => Unit): Unit =
+    result.get match {
       case FiberState.Completed(value) =>
         cb(value)
-      case FiberState.Executing(callbacks) =>
-        if (!result.compareAndSet(current, FiberState.Executing(cb :: callbacks))) addCallback(cb)
+      case oldState @ FiberState.Executing(callbacks) =>
+        if (!result.compareAndSet(oldState, FiberState.Executing(cb :: callbacks))) await(cb)
     }
-  }
 
   override def join: Task[A] =
-    Task.async { cb =>
-      addCallback(cb)
+    Task.async(await)
+
+  override def interrupt: Task[Unit] =
+    Task {
+      isInterrupted.set(true)
+      if (isSuspended.get()) {
+        run(Task.Fail(Cause.Interrupt))
+      }
     }
 
+  run(task)
 }
