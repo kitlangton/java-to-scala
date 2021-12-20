@@ -189,16 +189,16 @@ object ListExamples extends App {
 
   // List[Int] -> Z
 
-  val (left, right) = (10, "hello")
-  val head :: tail  = listInt3
-  listInt3 match {
-    case three :: two :: tail     => println(s"$three, $two, $tail")
-    case ::(three, ::(two, tail)) => println(s"$three, $two, $tail")
-  }
-
-  println(listInt.headOption)
-  println(listInt1.headOption)
-  println(listInt2.headOption)
+//  val (left, right) = (10, "hello")
+//  val head :: tail  = listInt3
+//  listInt3 match {
+//    case three :: two :: tail     => println(s"$three, $two, $tail")
+//    case ::(three, ::(two, tail)) => println(s"$three, $two, $tail")
+//  }
+//
+//  println(listInt.headOption)
+//  println(listInt1.headOption)
+//  println(listInt2.headOption)
 }
 
 final case class Pet(name: String, age: Int)

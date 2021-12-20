@@ -103,8 +103,12 @@ object FunctionsAsValues extends Lesson {
   val constTest = test("const") {
     val answer: String => Int = ???
 
-    assertTrue(answer("foo") == answer("bar") && answer("foobar") == 42)
-  } @@ ignore
+    assertTrue(
+      answer("foo") == answer("bar"),
+      answer("foobar") == 42,
+      answer("STRING") == 42
+    )
+  }
 
   /** ✏ EXERCISE
     *
@@ -320,7 +324,8 @@ object PredicateExercise {
 
   }
 
-  val intPredicate = Predicate.or(Predicate.equalTo(42), Predicate.between(100, 200))
+  val intPredicate: Predicate[Int] =
+    Predicate.or(Predicate.equalTo(42), Predicate.between(100, 200))
 
   def printPredicate[A](predicate: Predicate[A], value: A): Unit = {
     val result = predicate(value)

@@ -98,6 +98,7 @@ object PartialFunctionExample extends App {
   val divideMyPartialFunction: MyPartialFunction[(Int, Int), Int] =
     MyPartialFunction[(Int, Int), Int] {
       case (dividend, divisor) if divisor != 0 => dividend / divisor
+      case _                                   => ???
     }
 
   println("---")
@@ -124,7 +125,7 @@ object MyPartialFunction {
           f(in)
           true
         } catch {
-          case _ => false
+          case _: Throwable => false
         }
 
       override def apply(in: In): Out = f(in)

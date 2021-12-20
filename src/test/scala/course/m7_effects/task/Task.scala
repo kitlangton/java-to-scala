@@ -28,6 +28,9 @@ sealed trait Task[+A] { self =>
   def *>[B](that: => Task[B]): Task[B] =
     flatMap(_ => that)
 
+  def <*(that: Task[Unit]): Task[A] =
+    self.zip(that).map(_._1)
+
   def delay(millis: Int) =
     Task.sleep(millis) *> self
 

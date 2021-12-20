@@ -2,6 +2,9 @@ package course.m5_functional_domain_modeling
 
 import course.Lesson
 import course.Lesson.???
+import course.m5_functional_domain_modeling.L5_Modeling.Config.{LocalConfig, S3Config}
+import course.m5_functional_domain_modeling.TicTacToe.Board.winningCombination
+import course.m5_functional_domain_modeling.TicTacToe.Coord
 import zio.test.TestAspect.ignore
 import zio.test._
 
@@ -30,7 +33,11 @@ object L5_Modeling extends Lesson {
 
       def makeSingle: RelationshipStatus = ???
 
-      assertTrue(makeMarried != makeSingle)
+      assertTrue(
+        makeMarried != makeSingle,
+        makeMarried == makeMarried,
+        makeSingle == makeSingle
+      )
     } @@ ignore
 
   /** ✏ EXERCISE
@@ -98,8 +105,6 @@ object L5_Modeling extends Lesson {
     * sealed traits and case classes, replacing nullable fields and throwing
     * methods with type-safe analogues.
     */
-  class S3Config(val accessKey: String, val bucket: String)
-  class LocalConfig(val path: String)
 
   class ParsedConfig(
       configType: String,
@@ -240,6 +245,7 @@ object FunctionalCounter {
     final case class Succeed(action: Action) extends ProcessResult
     final case object Fail                   extends ProcessResult
   }
+
   import ProcessResult._
 
   /** BONUS
@@ -325,6 +331,7 @@ object TicTacToe {
 
     loop(State.empty)
   }
+
 }
 
 /** PROJECT

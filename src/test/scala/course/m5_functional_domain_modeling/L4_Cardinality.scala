@@ -171,10 +171,8 @@ object L4_Cardinality extends Lesson {
   // Option[RPS]
   val optionRPSCardinality: Int = 0 // <- Update the cardinality here
 
-  // Option[Option[Boolean]]
   val optionOptionBooleanCardinality: Int = 0 // <- Update the cardinality here
 
-  // Option[Box[Option[RPS]]]
   val optionBoxOptionRPSCardinality: Int = 0 // <- Update the cardinality here
 
   val testOption =

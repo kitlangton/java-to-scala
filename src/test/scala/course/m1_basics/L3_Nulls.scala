@@ -26,7 +26,7 @@ object NullBasics extends Lesson {
     def parentOf(file: String) = new File(file).getParent
 
     assertTrue(parentOf("") != null)
-  }
+  } @@ ignore
 
   /** ✏ EXERCISE
     *
@@ -43,7 +43,7 @@ object NullBasics extends Lesson {
       fromNullable(nullString) == None,
       fromNullable(0) == Some(0)
     )
-  }
+  } @@ ignore
 
   /** ✏ EXERCISE
     *
@@ -128,7 +128,7 @@ object NullBasics extends Lesson {
       chain(Some(5), (x: Int) => if (x < 10) None else Some(x)) == None,
       chain(None, (x: Int) => if (x < 10) None else Some(x)) == None
     )
-  }
+  } @@ ignore
 
   /** ✏ EXERCISE
     *

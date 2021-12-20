@@ -4,6 +4,8 @@ import course.Lesson
 import zio.test._
 import zio.test.TestAspect._
 
+import scala.util.Try
+
 /** Many programming languages use exceptions as a way to short-circuit the
   * normal return process and signal failure to higher levels of an application.
   * Functional Scala provides another option: using typed return values, which

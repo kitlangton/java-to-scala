@@ -2,11 +2,14 @@ package course.m1_basics
 
 import course._
 import course.Lesson.???
+import course.m1_basics.ImplicitConversions.StringUtils.yell
 import zio.test.TestAspect.ignore
 import zio.test.assertTrue
 
 import scala.annotation.implicitNotFound
+import scala.concurrent.Future
 import scala.language.implicitConversions
+//import scala.language.implicitConversions
 
 /** Implicits are very unique and powerful feature of Scala. They also can be
   * incredibly confusing to newcomers: Secretly changing the behavior of code
@@ -34,8 +37,8 @@ object ImplicitParameters extends Lesson {
     s"Here's the Int I found: $int"
 
   // Both of these methods can be called in the usual way
-  explicitMethod(100)
-  implicitMethod(100)
+//  explicitMethod(100) // => Here's the Int you gave me: 100
+//  implicitMethod(100) // => Here's the Int I found: 100
 
   /** ✏ EXERCISE
     *

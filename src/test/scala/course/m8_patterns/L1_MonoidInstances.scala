@@ -1,14 +1,24 @@
 package course.m8_patterns
 
 import course.Lesson
-import course.Lesson.???
 import zio.test.TestAspect.ignore
 import zio.test.assertTrue
 
-object L2_MonoidInstances extends Lesson {
+object L1_MonoidInstances extends Lesson {
 
+  // Int with Some Operation with Some Rules
+  // Expressed as traits
+  //           A
+  //        + Int *
+  // - op: binary operation
+  // - associative
+  // - commutative
+  // - identity op else = else
+  // - else op identity = else
+  // - (+, 0) - (*, 1)
   trait Monoid[A] {
     def combine(a1: A, a2: A): A
+
     def empty: A
   }
 
@@ -27,8 +37,8 @@ object L2_MonoidInstances extends Lesson {
 
   val stringTest =
     test("String Monoid") {
-      val values = List("a", "b", "c", "d")
-      assertTrue(smoosh(values) == "abcd")
+      val values = List("aaaa", "b", "c", "d")
+      assertTrue(smoosh(values) == "aaaabcd")
     } @@ ignore
 
   /** ✏ EXERCISE
@@ -36,7 +46,7 @@ object L2_MonoidInstances extends Lesson {
     * Create a monoid for the `Multiply` type, which will multiply Int values
     * together.
     */
-  final case class Multiply(int: Int)
+  final case class Multiply(int: Int) extends AnyVal
 
   object Multiply {
     // CREATE THIS INSTANCE
@@ -75,7 +85,9 @@ object L2_MonoidInstances extends Lesson {
     * Create a monoid for the `Map[K, V]` type, which will concatenate maps,
     * given that their values are monoids.
     */
-  implicit def mapMonoid[K, V]: Monoid[Map[K, V]] = ???
+  implicit def mapMonoid[K, V](
+      // You'll need something in here.
+  ): Monoid[Map[K, V]] = ???
 
   val mapTest =
     test("Map Monoid") {

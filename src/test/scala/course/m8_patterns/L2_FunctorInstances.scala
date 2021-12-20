@@ -4,7 +4,7 @@ import course.Lesson
 import zio.test.TestAspect.ignore
 import zio.test.assertTrue
 
-object L3_FunctorInstances extends Lesson {
+object L2_FunctorInstances extends Lesson {
 
   trait Functor[F[+_]] {
     def map[A, B](fa: F[A])(f: A => B): F[B]

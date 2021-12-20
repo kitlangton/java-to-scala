@@ -45,9 +45,14 @@ object ListOperations extends Lesson {
   val mapTest = test("map") {
     val list1 = List(0, 3, 0, 2, 1)
 
-    val list2 = list1.map(i => i) // EDIT HERE
+    val list2: List[Int] = ???
 
-    assertTrue(list2.sum == 12 && list2.length == list1.length)
+    assertTrue(
+      list1 == List(0, 3, 0, 2, 1),
+      list2 == List(0, 6, 0, 4, 2),
+      list2.sum == 12,
+      list2.length == list1.length
+    )
   } @@ ignore
 
   /** ✏ EXERCISE
@@ -56,14 +61,12 @@ object ListOperations extends Lesson {
     * even numbers.
     */
   val filterTest = test("filter") {
-    val isEven = (i: Int) => i % 2 == 0
-
     val list1 = List(0, 3, 0, 2, 1)
 
     val list2 = list1.filter(_ => true) // EDIT HERE
 
     assertTrue(list2 == List(0, 0, 2))
-  } @@ ignore
+  }
 
   /** ✏ EXERCISE
     *
@@ -149,25 +152,6 @@ object ListOperations extends Lesson {
 
   /** ✏ EXERCISE
     *
-    * Using `reduceOption`, sum up both of the provided lists. In what cases
-    * does `reduceOption` return `None`?
-    */
-  val reduceOptionTest = test("reduceOption") {
-    val list1: List[Int] = List()
-    val list2: List[Int] = List(1, 2, 3)
-
-    def summedList1: Option[Int] = list1.reduceOption(_ + _)
-
-    def summedList2: Option[Int] = list2.reduceOption(_ + _)
-
-    assertTrue(
-      summedList1 == None,
-      summedList2 == Some(6)
-    )
-  } @@ ignore
-
-  /** ✏ EXERCISE
-    *
     * Using `List#find`, find the first number that is greater than two in the
     * provided list.
     */
@@ -205,10 +189,12 @@ object ListOperations extends Lesson {
     def forallEven: Boolean = ???
 
     assertTrue(forallEven)
-  } @@ ignore
+  }
 
   def exercise =
     suite("Operations")(
+      foreachTest,
+      mapTest,
       filterTest,
       takeTest,
       takeWhileTest,
@@ -216,7 +202,6 @@ object ListOperations extends Lesson {
       dropWhileTest,
       collectTest,
       partitionTest,
-      reduceOptionTest,
       findTest,
       existsTest,
       forallTest
@@ -364,65 +349,4 @@ object Performance extends Lesson {
       randomAccessTest,
       containmentTest
     )
-}
-
-/** Scala collections library is a highlight of the Scala standard library,
-  * containing diverse and high-performance immutable data structures equipped
-  * with dozens of helpful operators.
-  *
-  * In this graduation project, you will gain experience using the Scala
-  * collections to implement a graph data structure.
-  */
-object CollectionsGraduation {
-
-  /** ✏ EXERCISE
-    *
-    * Using other Scala collections, choose a representation for a graph whose
-    * nodes are identified by type `V`, and whose edges are identified by type
-    * `E`.
-    */
-  final case class Graph[E, V]() {
-
-    /** ✏ EXERCISE
-      *
-      * Implement a function to retrieve the edges connected to the specified
-      * node.
-      */
-    def edgesOf(v: V): Set[E] = ???
-
-    /** ✏ EXERCISE
-      *
-      * Implement a function to connect the two nodes with the specified edge.
-      */
-    def connect(v1: V, e: E, v2: V): Graph[E, V] = ???
-
-    /** ✏ EXERCISE
-      *
-      * Implement a function to cdisonnect the two nodes from the specified
-      * edge.
-      */
-    def disconnect(v1: V, e: E, v2: V): Graph[E, V] = ???
-
-    /** ✏ EXERCISE
-      *
-      * Implement a function to return the set of all nodes in the graph.
-      */
-    def nodes: Set[V] = ???
-
-    /** ✏ EXERCISE
-      *
-      * Implement a function to delete the specified node.
-      */
-    def delete(v: V): Graph[E, V] = ???
-
-    /** ✏ EXERCISE
-      *
-      * Implement a function to fold over the nodes, passing at each node both a
-      * current state value, and the set of edges connected to the node.
-      */
-    def fold[Z](initial: Z)(f: (Z, V, Set[E]) => Z): Z = ???
-  }
-  object Graph {
-    def empty[E, V] = Graph()
-  }
 }

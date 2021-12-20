@@ -13,7 +13,6 @@ object FutureState {
 }
 
 class Future[A] {
-
   var callbacks: List[A => Unit] = Nil
 
   var result: FutureState[A] = FutureState.Executing

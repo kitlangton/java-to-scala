@@ -100,12 +100,12 @@ object L1_Exercises extends Lesson {
     */
 
   def add(x: Int, y: Int): Int =
-    x + y // <- Fix this implementation
+    ??? // <- Fix this implementation
 
   val testExample =
     test("example") {
       assertTrue(add(12, 88) == 100)
-    } // <- Delete `@@ ignore` from here, so that the test can run
+    } @@ ignore // <- Delete `@@ ignore` from here, so that the test can run
 
   /** ✏ EXERCISE
     *
@@ -113,12 +113,12 @@ object L1_Exercises extends Lesson {
     */
 
   def uppercase(string: String): String =
-    string.toUpperCase
+    string + "???" // <- Fix this implementation
 
   val testExample2 =
     test("another example") {
-      assertTrue(uppercase("i'm getting the hang of it!") == "I'M GETTING THE HANG OF IT!")
-    }
+      assertTrue(uppercase("i'm getting the hang of it") == "I'M GETTING THE HANG OF IT")
+    } @@ ignore
 
   /** ✏ EXERCISE
     *
@@ -134,7 +134,7 @@ object L1_Exercises extends Lesson {
     * Command-Period, and then select "Insert type annotation"
     */
 
-  val fillInTheType: Int = 123
+  val fillInTheType = 123
 
   /** ☃︎ EXAMPLE
     *
@@ -143,7 +143,7 @@ object L1_Exercises extends Lesson {
     * language. As always, feel free to experiment with or modify these.
     */
 
-  val `this nonsense` =
+  val `you can use any identifier if you surround it with backticks` =
     "cool."
 
   // All Exercises
