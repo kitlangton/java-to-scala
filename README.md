@@ -8,6 +8,6 @@
 
 2. Open it in your favorite IDE (preferably IntelliJ IDEA or VSCode)
 
-3. Navigate to the Introductory lesson: `m0_introduction.L1_Exercises`
+3. Navigate to the Introductory lesson: `course.exercises.E0_Introduction`
     
-    <img width="314" alt="image" src="https://user-images.githubusercontent.com/7587245/138726555-b84a7b67-0ef4-4160-826c-fd3e453a2be8.png">
+    <img width="363" alt="CleanShot 2022-05-09 at 11 28 23@2x" src="https://user-images.githubusercontent.com/7587245/167444066-3ebae0b9-e248-4eca-b801-a145f7a212d5.png">
