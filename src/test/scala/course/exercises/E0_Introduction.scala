@@ -146,7 +146,7 @@ object E0_Introduction extends Exercise {
     "cool."
 
   // All Exercises
-  def exercise = suite("Sealed Traits")(
+  def exercise = suite("Introduction")(
     testExample,
     testExample2
   ) @@ sequential
