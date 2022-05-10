@@ -57,7 +57,7 @@ object E3_FunctionComposition extends App {
     * returns a function that operates on a tuple of their inputs.
     */
 
-  def both[A, B, C, D](f: A => B, g: C => D): (A, B) => (C, D) =
+  def both[A, B, C, D](f: A => B, g: C => D): ((A, C)) => (B, D) =
     ???
 
 }
