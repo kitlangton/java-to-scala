@@ -93,18 +93,18 @@ object E0_Introduction extends Exercise {
     *       containing object
     *     - In VSCode, you can click on the run button directly above the
     *       containing object
-    *     - Otherwise, you may run `testOnly *L1_Exercises*` (or the respective
-    *       lesson name) after launching `sbt`
+    *     - Otherwise, you may run `testOnly *E0_Introduction*` (or the
+    *       respective lesson name) after launching `sbt`
     *   - Rinse & Repeat, until all tests are passing
     */
 
   def add(x: Int, y: Int): Int =
-    ??? // <- Fix this implementation
+    x + y // <- Fix this implementation
 
   val testExample =
     test("example") {
       assertTrue(add(12, 88) == 100)
-    } @@ ignore // <- Delete `@@ ignore` from here, so that the test can run
+    } // <- Delete `@@ ignore` from here, so that the test can run
 
   /** ✏ EXERCISE
     *
@@ -112,12 +112,12 @@ object E0_Introduction extends Exercise {
     */
 
   def uppercase(string: String): String =
-    string + "???" // <- Fix this implementation
+    string.toUpperCase // <- Fix this implementation
 
   val testExample2 =
     test("another example") {
       assertTrue(uppercase("i'm getting the hang of it") == "I'M GETTING THE HANG OF IT")
-    } @@ ignore
+    }
 
   /** ✏ EXERCISE
     *
@@ -133,7 +133,7 @@ object E0_Introduction extends Exercise {
     * Command-Period, and then select "Insert type annotation"
     */
 
-  val fillInTheType = 123
+  val fillInTheType: String = "hello"
 
   /** ☃︎ EXAMPLE
     *

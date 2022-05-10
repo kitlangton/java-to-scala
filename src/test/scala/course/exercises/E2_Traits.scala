@@ -170,11 +170,40 @@ object E2_Traits extends Exercise {
     def fill[A](n: Int)(element: A): Iterator[A]   = ??? // <- EDIT HERE
   }
 
+  val arrayIteratorTest = test("Array Iterator") {
+    val array    = Array(1, 2, 3, 4, 5)
+    val iterator = Iterator.fromArray(array)
+    var sum      = 0
+    while (iterator.hasNext)
+      sum += iterator.next()
+    assertTrue(
+      !iterator.hasNext,
+      sum == 15
+    )
+  } @@ ignore
+
+  val fillIteratorTest = test("Fill Iterator") {
+    val iterator = Iterator.fill(5)("Hello")
+    var size     = 0
+    var allHello = true
+    while (iterator.hasNext) {
+      allHello = allHello && iterator.next() == "Hello"
+      size += 1
+    }
+    assertTrue(
+      !iterator.hasNext,
+      allHello,
+      size == 5
+    )
+  } @@ ignore
+
   def exercise =
     suite("Traits")(
       pokeableTest,
       customPokeableTest,
       shapeTest,
-      subtypingTest
+      subtypingTest,
+      arrayIteratorTest,
+      fillIteratorTest
     )
 }
