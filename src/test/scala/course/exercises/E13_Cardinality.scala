@@ -1,5 +1,6 @@
 package course.exercises
 
+import course.archive.cohort1.m5_functional_domain_modeling.Answers
 import zio.test.TestAspect.ignore
 import zio.test._
 
