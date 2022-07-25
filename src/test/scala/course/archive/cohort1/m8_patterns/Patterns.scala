@@ -1,6 +1,5 @@
 package course.archive.cohort1.m8_patterns
 
-import course.exercises.Exercise.???
 import ReifyingThePattern.{Monoid, collapse}
 import StringUtils._
 

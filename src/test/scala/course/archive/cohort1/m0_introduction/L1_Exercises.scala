@@ -1,6 +1,6 @@
 package course.archive.cohort1.m0_introduction
 
-import course.exercises.Exercise
+import course.archive.cohort2.exercises.Exercise
 import zio.test.TestAspect._
 import zio.test.assertTrue
 

@@ -1,6 +1,6 @@
 package course.archive.cohort1.m5_functional_domain_modeling
 
-import course.exercises.Exercise
+import course.archive.cohort2.exercises.Exercise
 import zio.test.TestAspect.ignore
 import zio.test._
 

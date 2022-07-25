@@ -1,6 +1,6 @@
 package course.archive.cohort1.m7_effects
 
-import course.exercises.Exercise
+import course.archive.cohort2.exercises.Exercise
 import zio.test.TestAspect.{ignore, nonFlaky}
 import zio.test._
 

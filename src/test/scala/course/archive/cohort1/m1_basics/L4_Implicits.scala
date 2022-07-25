@@ -1,9 +1,9 @@
 package course.archive.cohort1.m1_basics
 
-import course.exercises.Exercise.???
 import course._
-import course.exercises.Exercise
 import ImplicitConversions.Name
+import course.archive.cohort2.exercises.Exercise.???
+import course.archive.cohort2.exercises.Exercise
 import zio.test.TestAspect.ignore
 import zio.test.assertTrue
 

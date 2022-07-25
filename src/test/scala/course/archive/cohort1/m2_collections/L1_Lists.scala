@@ -1,8 +1,8 @@
 package course.archive.cohort1.m2_collections
 
+import course.archive.cohort2.exercises.Exercise
 import zio.test._
 import zio.test.TestAspect._
-import course.exercises.Exercise
 
 /** For loops are common in other programming languages. In functional Scala,
   * however, most for loops are replaced by operations on Scala collections,

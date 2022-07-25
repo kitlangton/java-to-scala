@@ -1,9 +1,9 @@
 package course.archive.cohort1.m1_basics
 
-import course.exercises.Guess.guessType
-import course.exercises.Exercise.???
-import course.exercises.SomeType.same
-import course.exercises.{Guess, Exercise}
+import course.archive.cohort2.exercises.Exercise.???
+import course.archive.cohort2.exercises.Guess.guessType
+import course.archive.cohort2.exercises.SomeType.same
+import course.archive.cohort2.exercises.{Exercise, Guess}
 import zio.test.TestAspect.ignore
 import zio.test._
 

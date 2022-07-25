@@ -1,7 +1,7 @@
 package course.archive.cohort1.m5_functional_domain_modeling
 
-import course.exercises.Exercise.???
-import course.exercises.Exercise
+import course.archive.cohort2.exercises.Exercise
+import Exercise.???
 import zio.test.TestAspect.ignore
 import zio.test._
 
@@ -96,78 +96,11 @@ object L5_Modeling extends Exercise {
       )
     } @@ ignore
 
-  /** ✏ EXERCISE
-    *
-    * Migrate this imprecise data model to a precise data model comprised of
-    * sealed traits and case classes, replacing nullable fields and throwing
-    * methods with type-safe analogues.
-    */
-
-  class ParsedConfig(
-      configType: String,
-      s3Config: String,
-      localConfig: String
-  ) {
-    def connect(): Unit =
-      if (configType == "s3")
-        println(s"Connecting to S3 bucket $s3Config")
-      else
-        println(s"Connecting to local file system at $localConfig")
-  }
-
-//  object ParsedConfig {
-//    def load(data: Map[String, String]): ParsedConfig =
-//      data("configType") match {
-//        case "s3" =>
-//          val s3Config = new S3Config(data("accessKey"), data("bucket"))
-//          new ParsedConfig("s3", s3Config, null)
-//        case "local" =>
-//          val localConfig = new LocalConfig(data("path"))
-//          new ParsedConfig("local", null, localConfig)
-//      }
-//  }
-
-  val testConfig =
-    test("Config") {
-      val s3Data = Map(
-        "configType" -> "s3",
-        "accessKey"  -> "123",
-        "bucket"     -> "bucket"
-      )
-
-      val localData = Map(
-        "configType" -> "local",
-        "path"       -> "/tmp/data"
-      )
-
-      val wrongData = Map(
-        "favoriteMovie" -> "The Matrix",
-        "favoriteFood"  -> "Pizza",
-        "favoriteColor" -> "Blue"
-      )
-
-//      ** UNCOMMENT THESE LINES **
-//      ===========================
-//      val s3Config: Option[Config] = ParsedConfig.load(s3Data)
-//      val localConfig: Option[Config] = ParsedConfig.load(localData)
-//      val wrongConfig: Option[Config] = ParsedConfig.load(wrongData)
-
-      assertTrue(
-//        ** UNCOMMENT THESE ASSERTIONS **
-//        ================================
-//        s3Config.get == S3Config("123", "bucket"),
-//        localConfig.get == LocalConfig("/tmp/data"),
-//        wrongConfig == None
-        true
-      )
-    } @@ ignore
-
   def exercise =
     suite("Modeling")(
       testRelationshipStatus,
       testIceCream,
-      testPortfolio,
-      testConfig
+      testPortfolio
     )
 }
 
@@ -224,26 +157,13 @@ object FunctionalCounter {
     case object Subtract extends Action
     case object Reset    extends Action
 
-    def fromString(string: String): ProcessResult = string match {
-      case "+"     => ProcessResult.succeed(Add)
-      case "-"     => ProcessResult.succeed(Subtract)
-      case "reset" => ProcessResult.succeed(Reset)
-      case _       => ProcessResult.fail
+    def fromString(string: String): Option[Action] = string match {
+      case "+"     => Some(Add)
+      case "-"     => Some(Subtract)
+      case "reset" => Some(Reset)
+      case _       => None
     }
   }
-
-  /** A monomorphic version of Option[Action]
-    */
-  sealed trait ProcessResult
-  object ProcessResult {
-    def succeed(action: Action): ProcessResult = Succeed(action)
-    def fail: ProcessResult                    = Fail
-
-    final case class Succeed(action: Action) extends ProcessResult
-    final case object Fail                   extends ProcessResult
-  }
-
-  import ProcessResult._
 
   /** BONUS
     *
@@ -257,14 +177,13 @@ object FunctionalCounter {
       println(state.render)
       print("> ")
       Action.fromString(StdIn.readLine()) match {
-        case Succeed(action) => state = state.process(action)
-        case Fail            => loop = false
+        case Some(action) => state = state.process(action)
+        case None         => loop = false
       }
     }
   }
 
   def main(args: Array[String]): Unit = gameLoop()
-
 }
 
 /** PROJECT

@@ -1,6 +1,6 @@
 package course.archive.cohort1.m4_recursion
 
-import course.exercises.Exercise
+import course.archive.cohort2.exercises.Exercise
 import zio.test._
 import zio.test.TestAspect._
 
