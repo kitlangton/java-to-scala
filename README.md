@@ -1,6 +1,6 @@
 # Scala for the Java Developer
 
-## Exercise Repository
+## Instructions
 
 1. Clone this repository!
 
