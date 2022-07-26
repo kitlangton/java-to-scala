@@ -50,41 +50,14 @@ object Coord {
   def leftmostNeighbor(c: Coord): Coord     = new Coord(c.x - 1, c.y)
   def midpoint(c1: Coord, c2: Coord): Coord = ???
   def midpoint(coords: List[Coord]): Coord  = ???
+
+  def apply(string: String): Coord =
+    new Coord(string.length, string.length)
 }
 
 object CoordExample extends App {
-  // celestial domain of types
-  // terrestrial world of terms
-  // type namespace vs term namespace
-  // Coord class       Coord companion
-  val c1: Coord = new Coord(1, 2)
-  val c2: Coord = new Coord(3, 4)
-  val c3: Coord = new Coord(5, 6)
-  // unary belong on the class
-  pprintln(c1.leftmostNeighbor) // √
-  12
-  "hello"
-  val Name = "Kit"
-
-  class Thing(name: String)
-  val Thing: Thing = new Thing("Kit")
-
-  object MathUtils
-
-  val mathUtilsType: MathUtils.type = MathUtils
-
-  val whatIsTheTypeOfTheCompanionObject: Coord.type =
-    Coord
-
-  pprintln(Coord.leftmostNeighbor(c1)) // X
-
-  // binary methods belong on the class
-  pprintln(c1.midpoint(c2))        // √
-  pprintln(Coord.midpoint(c1, c2)) // X
-
-  // greater than 2 arity methods these belong on the companion
-  pprintln(Coord.midpoint(List(c1, c2, c3))) // √
-  pprintln(c1.midpoint(List(c2, c3)))
+  private val coord: Coord = Coord.apply("HELLO")
+  println(coord)
 }
 
 object StringUtils {
