@@ -114,6 +114,43 @@ final case class Predicate[A](run: A => Boolean) {
 }
 
 object Predicate {
+  // Numeric
+//  def greaterThan(int: Int): Predicate[Int] =
+//    Predicate[Int](input => input > int)
+
+//  def greaterThan(double: Double): Predicate[Double] =
+//    Predicate[Double](input => input > double)
+//
+//  def greaterThan(long: Long): Predicate[Long] =
+//    Predicate[Long](input => input > long)
+//
+//  def greaterThan(float: Float): Predicate[Float] =
+//    Predicate[Float](input => input > float)
+
+  trait Comparable[A] {
+    def gt(lhs: A, rhs: A): Boolean
+  }
+
+  object Comparable {
+    implicit val intComparable: Comparable[Int] = new Comparable[Int] {
+      override def gt(lhs: Int, rhs: Int): Boolean = lhs > rhs
+    }
+
+    implicit val doubleComparable: Comparable[Double] = new Comparable[Double] {
+      override def gt(lhs: Double, rhs: Double): Boolean = lhs > rhs
+    }
+
+    implicit val longComparable: Comparable[Long] = new Comparable[Long] {
+      override def gt(lhs: Long, rhs: Long): Boolean = lhs > rhs
+    }
+  }
+
+  def greaterThan[A](value: A)(implicit numeric: Numeric[A]): Predicate[A] =
+    Predicate[A](input => numeric.gt(input, value))
+
+  def lessThan[A](value: A)(implicit numeric: Numeric[A]): Predicate[A] =
+    Predicate[A](input => numeric.lt(input, value))
+
   def equalTo[A](value: A): Predicate[A] =
     Predicate[A](input => input == value)
 
@@ -140,67 +177,20 @@ object Predicate {
     Predicate((a: A) => predicates.foldLeft(false)((acc, predicate) => acc || predicate.run(a)))
 }
 
-object Predicate2 {
-  // CONSTRUCTORS
-  def equalTo[A](value: A): A => Boolean =
-    (input: A) => input == value
-
-  def greaterThan(int: Int): Int => Boolean =
-    (input: Int) => input > int
-
-  def lessThan(int: Int): Int => Boolean =
-    (input: Int) => input < int
-
-  def greaterThanOrEqualTo(int: Int): Int => Boolean =
-    or(greaterThan(int), equalTo(int))
-
-  def lessThanOrEqualTo(int: Int): Int => Boolean =
-    or(lessThan(int), equalTo(int))
-
-  // COMBINATORS
-
-  def or[A](p1: A => Boolean, p2: A => Boolean): A => Boolean =
-    (input: A) => p1(input) || p2(input)
-
-  def and[A](p1: A => Boolean, p2: A => Boolean): A => Boolean =
-    (input: A) => p1(input) && p2(input)
-}
-
 object PredicateTests extends App {
 
-  final case class Event(audience: Int, isImportant: Boolean)
+  val equalTo5: Predicate[Int]          = Predicate.equalTo(5)
+  val equalTo5Double: Predicate[Double] = Predicate.equalTo(5.0)
+  val gt5: Predicate[Int]               = Predicate.greaterThan(5)
+  val gt5Double: Predicate[Double]      = Predicate.greaterThan(5.0)
+  val gt5Long: Predicate[Long]          = Predicate.greaterThan(5L)
 
-  val isImportant    = (event: Event) => event.isImportant
-  val hasBigAudience = (event: Event) => event.audience > 10
-
-  val eventPredicate = Predicate2.and(isImportant, hasBigAudience)
-
-  println("IS BIG EVENT?")
-  println(eventPredicate(Event(5, isImportant = true)))
-  println("--")
-
-  val eqTen: Int => Boolean =
-    Predicate2.equalTo(10)
-  val ltTen: Int => Boolean =
-    Predicate2.lessThan(10)
-
-  val composed: Predicate[Int] =
-    Predicate.equalTo(5) or
-      Predicate.equalTo(7) or
-      Predicate.equalTo(10)
-
-  val contains: Predicate[Int] =
-    Predicate.contains(List(100, 15))
-
-  val lessThanOrEqualToTen =
-    Predicate2.and(
-      Predicate2.or(eqTen, ltTen),
-      Predicate2.greaterThan(3)
-    )
-
-  val composedAny =
-    Predicate.any(composed, contains, Predicate.equalTo(37)).not
-  println(composedAny.run(7))
+  println(gt5.run(6))
+  println(gt5.run(5))
+  println(gt5Double.run(6.0))
+  println(gt5Double.run(5.0))
+  println(gt5Long.run(6L))
+  println(gt5Long.run(5L))
 
 //  println(eqTen(10)) // true
 //  println(eqTen(5))  // false
