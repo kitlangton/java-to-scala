@@ -157,14 +157,16 @@ object E8_SealedTraits extends Exercise {
   sealed trait Color
 
   object Color {
-    case object Red extends Color
-
+    case object Red   extends Color
     case object Green extends Color
-
-    case object Blue extends Color
+    case object Blue  extends Color
   }
 
   def isRed(color: Color): Boolean = ??? // <- write "color match" then select "match (exhaustive)"
+
+  assert(isRed(Color.Red))
+  assert(!isRed(Color.Green))
+  assert(!isRed(Color.Blue))
 
   val testMatchExhaustive =
     test("match exhaustive") {

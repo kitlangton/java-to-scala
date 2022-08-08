@@ -277,15 +277,15 @@ object OptionFromScratch extends App {
 //    println("NO SUCH ELEMENT DUDE")
 }
 
-// - List Methods
+// √ List Methods
 //   - foldLeft
 //   - groupBy
 //   - find
 //   - collect (PartialFunction)
-// - Tail Recursion
+// √ Tail Recursion
 //   - Fibonacci (as promised!)
 //   - Exercise: https://adventofcode.com/2018/day/1
-// - Option
+// √ Option
 // - Either
 // - Parser
 // - Implicit Conversions
