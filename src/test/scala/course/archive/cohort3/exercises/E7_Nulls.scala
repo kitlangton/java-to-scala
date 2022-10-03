@@ -1,4 +1,4 @@
-package course.cohort3.exercises
+package course.archive.cohort3.exercises
 
 import course.archive.cohort2.exercises.Exercise
 import zio.test.TestAspect._

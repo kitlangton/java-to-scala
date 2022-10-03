@@ -1,4 +1,4 @@
-package course.cohort3.exercises
+package course.archive.cohort3.exercises
 
 object E3_FunctionComposition extends App {
 

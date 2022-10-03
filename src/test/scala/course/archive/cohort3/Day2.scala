@@ -1,4 +1,4 @@
-package course.cohort3
+package course.archive.cohort3
 
 import pprint.pprintln
 

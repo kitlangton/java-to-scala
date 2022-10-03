@@ -1,4 +1,4 @@
-package course.cohort3
+package course.archive.cohort3
 
 import zio.test._
 import zio.{RuntimeFlags => _, _}

@@ -1,4 +1,4 @@
-package course.cohort3
+package course.archive.cohort3
 
 import java.time.{Duration, Instant}
 import java.util.concurrent.{ScheduledThreadPoolExecutor, TimeUnit}
