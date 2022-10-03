@@ -15,7 +15,10 @@ lazy val root = (project in file("."))
       "org.typelevel" %% "cats-effect"  % "3.3.11",
       "com.twitter"   %% "finagle-http" % "22.4.0",
       "dev.zio"       %% "zio-test"     % zioVersion % Test,
-      "dev.zio"       %% "zio-test-sbt" % zioVersion % Test
+      "dev.zio"       %% "zio-test-sbt" % zioVersion % Test,
+      // funsuite
+      "org.scalatest"  %% "scalatest"  % "3.2.12",
+      "org.scalacheck" %% "scalacheck" % "1.16.0"
     ),
     testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework"),
     scalacOptions ++= Seq(

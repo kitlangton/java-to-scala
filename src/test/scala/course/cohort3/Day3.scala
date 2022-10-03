@@ -103,6 +103,7 @@ final case class Email(string: String) {
 // case class
 // wrapping predicates in case classes
 final case class Predicate[-A](run: A => Boolean) {
+
   def or[A1 <: A](that: Predicate[A1]): Predicate[A1] =
     Predicate(input => run(input) || that.run(input))
 

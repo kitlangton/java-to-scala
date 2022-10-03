@@ -16,7 +16,7 @@ object CatsEffectSolutions_Forking extends IOApp.Simple {
   def flatMapAdd(task: IO[Int]): IO[Int] =
     task.flatMap { x =>
       println(s"THREAD: ${Thread.currentThread().getName}")
-      IO.delay(x + 1)
+      IO.pure(x + 1)
     }
 
   @tailrec
@@ -35,10 +35,11 @@ object CatsEffectSolutions_ReferentialTransparency extends IOApp.Simple {
       _   <- IO.sleep(300.millis)
     } yield int
 
+  private val value: IO[Int] = randomFuture(100)
   val run = for {
-    x <- randomFuture(100)
-    y <- randomFuture(100)
-    z <- randomFuture(100)
+    x <- value
+    y <- value
+    z <- value
   } yield println(s"$x + $y + $z = ${x + y + z}")
 
 }
@@ -74,8 +75,9 @@ object CatsEffectSolutions_RacingInterruption extends IOApp.Simple {
       _      <- IO.println(s"END $name")
     } yield result
 
-  val result: IO[Either[Either[Int, Int], Int]] =
+  val result: IO[Either[Either[Either[Int, Int], Int], Int]] =
     delay("one", 1, 1000) race
+      delay("oops", { println("BOOM!"); throw new Error("KABOOM") }, 100) race
       delay("two", 2, 2000) race
       delay("three", 3, 3000)
 

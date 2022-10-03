@@ -8,13 +8,13 @@ import scala.concurrent.{Await, Future}
 object FutureProblems_Forking extends App {
   def makeFuture(value: Int): Future[Int] =
     Future {
-      println(s"START THREAD: ${Thread.currentThread().getName}")
+      println(s"VALUE $value START THREAD: ${Thread.currentThread().getName}")
       value
     }
 
   def flatMapAdd(fut: Future[Int]): Future[Int] =
     fut.flatMap { x =>
-      println(s"THREAD: ${Thread.currentThread().getName}")
+      println(s"VALUE $x THREAD: ${Thread.currentThread().getName}")
       Future(x + 1)
     }
 
@@ -28,17 +28,18 @@ object FutureProblems_Forking extends App {
 }
 
 object FutureProblems_ReferentialTransparency extends App {
-  def randomFuture(max: Int) = Future {
+  def randomFuture(max: Int): Future[Int] = Future {
     val randomInt = scala.util.Random.nextInt(max)
-    println(s"START $randomInt")
+    println(s"RANDOM $randomInt")
     Thread.sleep(300)
     randomInt
   }
 
+  private val eventualInt: Future[Int] = randomFuture(100)
   for {
-    x <- randomFuture(100)
-    y <- randomFuture(100)
-    z <- randomFuture(100)
+    x <- eventualInt
+    y <- eventualInt
+    z <- eventualInt
   } yield println(s"$x + $y + $z = ${x + y + z}")
 
   Thread.sleep(3000)
@@ -53,8 +54,6 @@ object FutureProblems_FailureInterruption extends App {
       println(s"FINISHED CALCULATING $value")
       value
     }
-
-  delay(1, 1000).onComplete(result => println(result))
 
   val result: Future[List[Int]] = Future.sequence(
     List(
@@ -75,16 +74,17 @@ object FutureProblems_FailureInterruption extends App {
 object FutureProblems_RacingInterruption extends App {
   def delay(value0: => Int, ms: Int): Future[Int] =
     Future {
-      val value = value0
-      println(s"START $value")
+      println(s"START")
       Thread.sleep(ms)
+      val value = value0
       println(s"COMPLETED $value")
       value
     }
 
-  val result: Future[Int] = Future.firstCompletedOf(
+  lazy val result: Future[Int] = Future.firstCompletedOf(
     List(
       delay(1, 1000),
+      delay(throw new Error("OOPS"), 500),
       delay(2, 2000),
       delay(3, 3000)
     )

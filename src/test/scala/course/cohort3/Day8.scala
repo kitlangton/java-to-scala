@@ -3,6 +3,7 @@ package course.cohort3
 import pprint.pprintln
 
 import scala.annotation.tailrec
+import scala.language.implicitConversions
 
 object Day8 extends App {
   // - Functional Design
@@ -150,6 +151,12 @@ object Parser extends App {
     if (prefix.isEmpty) None
     else Some((remaining, prefix.toInt))
   }
+
+  implicit def string2Parser(string: String): Parser[Char] =
+    charIn(string)
+
+  // 1. String => Parser
+  val cool = intParser ~ "x"
 
   // Option / Either / Parser
   val coordParser: Parser[Coord] =
