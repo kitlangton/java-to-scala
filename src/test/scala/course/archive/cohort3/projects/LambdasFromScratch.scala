@@ -1,4 +1,4 @@
-package course.projects
+package course.archive.cohort3.projects
 
 trait MyFunction[In, Out] {
   def apply(in: In): Out

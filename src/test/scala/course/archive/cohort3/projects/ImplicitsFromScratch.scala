@@ -1,4 +1,4 @@
-package course.projects
+package course.archive.cohort3.projects
 
 object ImplicitsFromScratch extends App {
   final case class Type(name: String, arguments: List[Type] = List.empty)
