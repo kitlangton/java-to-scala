@@ -234,6 +234,7 @@ object FriendDemo extends App {
   println(Friend.greet(friend))
 }
 
+// Spot <: Dog <: Mammal <: Organism
 class Dog(val name: String) extends Organism {
   def genus: String   = "Canis"
   def species: String = "familiaris"
