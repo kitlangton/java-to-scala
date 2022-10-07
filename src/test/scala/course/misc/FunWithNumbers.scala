@@ -1,4 +1,4 @@
-package course.lessons.misc
+package course.misc
 
 object FunWithNumbers {
   class Number(var value: Int) {

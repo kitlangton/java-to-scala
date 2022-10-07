@@ -1,6 +1,7 @@
 package course.cohort4
 
 object Day4 extends App {
+
   val double = (x: Int) => x * 2
 // double(10) == 20
 
@@ -21,4 +22,292 @@ object Day4 extends App {
 
   val replicateUncurried = (x: String, y: Int) => x * y
 // replicateUncurried("ha", 3) == "hahaha"
+
+}
+
+object FunkyNumbers extends App {
+  import course.misc.FunWithNumbers._
+
+  print("5 ＋ 20 = ")
+  println(5 ＋ 20)
+
+  print("10 ＋ 40 = ")
+  println(10 ＋ 40)
+
+  print("5 ＋ 10 = ")
+  println(5 ＋ 10)
+
+  println(5)
+}
+
+object FunctionLiteral extends App {
+  // INSTRUCTIONS
+  // ============
+  // Create a function/lambda which squares its argument.
+
+//  def squareDef(i: Int): Int = i * i
+//  val square: Int => Int     = squareDef
+
+  //    _ * _
+  //    (a0, a1) => a0 * a1
+  //    _ * _ + _
+  //    (a0, a1, a2) => a0 * a1 + a2
+
+//  val square: Int => Int = i => i * i
+//  val add: (Int, Int) => Int = _ + _
+
+//  val square: Int => Int = x => x * x
+//  val square: Int => Int =    x => x * x
+
+  // Int => Int
+  // label of a container
+  val square: Int => Int =
+    (x: Int) => x * x
+
+  val add5: Int => Int =
+    (x: Int) => x + 5
+
+  val forgetAndReturn1000: Int => Int =
+    (x: Int) => 1000
+
+  // val square: (x: Int) => Int = x * x
+
+  val result = square(10)
+  assert(result == 100, s"Expected 100, got $result")
+}
+
+object TypingLambdas extends App {
+  // INSTRUCTIONS
+  // ============
+  // Add type signatures to the following function values
+  val double: Int => Int =
+    (x: Int) => x * 2
+  // double(10) == 20
+
+  val intToChar: Int => Char =
+    (x: Int) => x.toChar
+  // intToChar(65) == 'A'
+
+  val stringLength: String => Int =
+    (x: String) => x.length
+  // stringLength("HELLO") == 5
+
+  val curriedAdd: Int => (Int => Int) =
+    (x: Int) => (y: Int) => x + y
+  // curriedAdd(10)(20) == 30
+
+// (y: Int) => 10 + y
+  val add10: Int => Int =
+    curriedAdd(10)
+  // add10(20) == 3
+
+  val replicateCurried: String => Int => String =
+    (string: String) => (y: Int) => string * y
+  // replicateCurried("ha")(3) == "hahaha"
+
+  val replicateUncurried: (String, Int) => String =
+    (string: String, y: Int) => string * y
+  // replicateUncurried("ha", 3) == "hahaha"
+}
+
+object References extends App {
+
+  class ReferencePerson(name: String, age: Int)
+
+  case class ValuePerson(name: String, age: Int)
+
+  val referenceMalick1 = new ReferencePerson("Reference Malick", 55)
+  val referenceMalick2 = new ReferencePerson("Reference Malick", 55)
+
+  val valueKilmer1 = ValuePerson("Value Kilmer", 38)
+  val valueKilmer2 = ValuePerson("Value Kilmer", 38)
+
+  println(referenceMalick1.toString)
+  println(valueKilmer1 == valueKilmer2) // true
+//  println("---")
+//  println(valueKilmer1)            // ValuePerson(Value Kilmer, 38)
+//  println(valueKilmer2)            // ValuePerson(Value Kilmer, 38)
+//  println(valueKilmer1.hashCode()) // -1182596071
+//  println(valueKilmer2.hashCode()) // -1182596071
+}
+
+object Generics1 extends App {
+  // How do we deal with duplication at the type level?
+  case class Pair[A](first: A, second: A)
+
+  trait Animal
+  trait Cat extends Animal
+  trait Dog extends Animal
+
+  // LUB - least upper bound
+  // closest common ancestor
+  // option-enter
+  val other = Pair(new Cat {}, new Cat {})
+
+  val ints: Pair[Int]                      = Pair(1, 2)
+  val strings: Pair[String]                = Pair("hello", "world")
+  val pairsOfBooleans: Pair[Pair[Boolean]] = Pair(Pair(true, false), Pair(false, true))
+
+}
+
+object Generics2 extends App {
+  case class Pair[A](first: A, second: A) {
+    def combinePair(combine: (A, A) => A): A =
+      combine(first, second)
+
+    def render(toString: A => String): String =
+      s"A pair of ${toString(first)} and ${toString(second)}"
+
+    def toList: List[A] = List(first, second)
+  }
+
+  def add(x: Int, y: Int): Int             = x + y
+  def concat(x: String, y: String): String = x + y
+  def and(b: Boolean, c: Boolean): Boolean = b && c
+
+  def combineInts(pair: Pair[Int]): Int             = add(pair.first, pair.second)
+  def combineStrings(pair: Pair[String]): String    = concat(pair.first, pair.second)
+  def combineBooleans(pair: Pair[Boolean]): Boolean = and(pair.first, pair.second)
+
+  def combinePair0[A](pair: Pair[A], combine: (A, A) => A): A =
+    combine(pair.first, pair.second)
+
+//  def and(b1: Boolean, b2: Boolean): Boolean        = b1 && b2
+
+  // A = Int
+  // A = Any
+  // Any
+  // multiple parameter
+
+  def giveMeAnother[A](a: A)(another: A): A  = another
+  def giveMeAnother2[A](a: A, another: A): A = another
+
+  val cool0: Int = giveMeAnother(100)(10)
+  val cool: Any  = giveMeAnother2(100, "hello")
+
+  def combinePair0[A](pair: Pair[A], combine: (A, A) => A): A =
+    combine(pair.first, pair.second)
+
+  def combinePair[A](pair: Pair[A])(combine: (A, A) => A): A =
+    combine(pair.first, pair.second)
+
+  // single param list
+  combinePair0(Pair(1, 2), (x: Int, y: Int) => x + y)
+  combinePair0(Pair("hello", "world"), (x: String, y: String) => x + y)
+  Pair(true, false).combinePair(_ && _)
+  Pair(10, 50).combinePair(_ + _)
+
+  // multiple param list
+  combinePair(Pair(1, 2))(_ + _)
+
+  val square: Int => Int                = x => x * x
+  val squareExpanded: (Int, Int) => Int = (x: Int, y: Int) => x * y
+  combinePair(Pair(1, 2))(_ + _)
+}
+
+// lambdas and generics and case classes
+// to model a composable predicate DSL
+// predicate: A => Boolean
+// "satisfy" a predicate
+// that input A returned true
+// base cases. foundational/simple solutions
+// combinators -> a function or method that combines/modifies one of these DSL values
+
+// - parser DSL (String => User)
+// - http DSL
+
+// A => Boolean
+// creating functions from A => Boolean from scratch
+// isEven
+// isOdd
+// isEqualTo(10)
+// modifying functions from A => Boolean
+// predicate.negate
+case class Digit(value: Int) {
+  // combinators/methods
+  // transform or combine this value
+  def double: Digit = Digit(value * 2)
+  def one: Digit    = Digit(1)
+}
+
+object Digit {
+  // constructors
+  def fromInt(int: Int) = Digit(int)
+  val zero: Digit       = Digit(0)
+  val one: Digit        = Digit(1)
+  val fortyTwo: Digit   = Digit(42)
+}
+
+object NumberExamples extends App {
+  println(Digit.fortyTwo)
+}
+
+object PredicateStuff extends App {
+  // abstraction
+  //
+  // constructors - base cases / foundational solutions
+  // combinators
+  case class Predicate[A](lambda: A => Boolean) {
+    // - what do I need
+    // - what do I have
+    // - can I construct any piece
+
+    // Goal: Case Class
+    // Tactic: Construct Case Class
+    // Effect: Case Class -> The Parameters
+    // Concretely: Predicate -> (A => Boolean)
+
+    // Goal: Lambda/Function Value
+    // Tactic: Introduce a Lambda
+    // Effect: (In => Out) -> Out
+    // Concretely: (A => Boolean) -> Boolean (we now have an A)
+
+    // Syntax / Semantics
+    // predicate.negate -> ???
+    // isEven(2) -> true
+    // isEven(2).negate -> false
+    // isEven(3) -> false
+    // isEven(3).negate -> true
+    def negate: Predicate[A] =
+      Predicate(a => !lambda(a))
+  }
+
+  object Predicate {
+    // # Int Predicates
+    val isEven: Predicate[Int] =
+      Predicate(_ % 2 == 0)
+
+    val isOdd: Predicate[Int] =
+      isEven.negate
+  }
+
+  val nums = List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+//  val odds = nums.filter(Predicate.negate(Predicate.isEven).lambda)
+  // a value that can determine whether or not an int is even
+  val odds = nums.filter(Predicate.isEven.negate.lambda)
+  println(nums)
+  println(odds)
+
+}
+
+object Questions extends App {
+
+  final case class Dog(name: String)
+//  class Cat(override val name: String) extends Dog(name)
+//  case class Malamute(override val name: String, size: Int) extends Dog(name)
+//  val georgy: Dog = new Malamute("Georgy", 100)
+
+  def add(x: Int, y: Int): Int =
+    x + y
+
+  val curriedAdd: Int => Int => Int =
+    x => y => x + y
+
+  // (y => 10 + y)
+  val add10: Int => Int =
+    curriedAdd(10)
+
+  println(add10)
+  println(add10(20))
+
 }
