@@ -74,7 +74,7 @@ trait Implicits {
 
 trait IntermediateTrait extends Implicits {
   val cool = 120
-//  implicit val jonny: Imp = Imp("Jonny")
+  implicit val jonny: Imp = Imp("Jonny")
 }
 
 // Implicit resolution
@@ -92,7 +92,7 @@ final case class Imp(name: String)
 
 object Imp {
   // IR will search the companion object of the type
-  implicit val beelzebub: Imp = Imp("Beelzebub")
+//  implicit val beelzebub: Imp = Imp("Beelzebub")
   //  implicit val jonny: Imp     = Imp("Jonny")
 }
 
