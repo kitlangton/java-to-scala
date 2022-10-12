@@ -279,6 +279,10 @@ object PredicateStuff extends App {
   //           B => C map
 
   // TODO: Make predicate a trait
+  // Consumer of As
+  // contravariant in that type
+  //     A <: B
+  //  P[B] <: P[A]
   case class Predicate[A](lambda: A => Boolean) extends (A => Boolean) {
 
     override def apply(input: A): Boolean =

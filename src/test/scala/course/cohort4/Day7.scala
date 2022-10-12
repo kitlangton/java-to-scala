@@ -225,14 +225,18 @@ object DataRecursion extends App {
       }
   }
 
+  case class Prepend(number: Int, tail: IntList) extends IntList
+  case object Empty                              extends IntList
+
+  // recursion
   def sum(ints: IntList): Int =
     ints match {
+      // base case
+      // recursive
+      //           10   +  sum(28, 32, 58)
       case Prepend(number, tail) => number + sum(tail)
       case Empty                 => 0
     }
-
-  case class Prepend(number: Int, tail: IntList) extends IntList
-  case object Empty                              extends IntList
 
   val ints123: IntList   = 1 :: 2 :: 3 :: Empty
   val ints12: IntList    = 1 :: 2 :: Empty
