@@ -131,12 +131,12 @@ object OptionStuff extends App {
   val input: String = scala.io.StdIn.readLine()
 
   // String => Option[A]
-  def processInputNull(input: String): Boolean =
-    input match {
-      case "yes" => true
-      case "no"  => false
-      case _     => null
-    }
+//  def processInputNull(input: String): Boolean =
+//    input match {
+//      case "yes" => true
+//      case "no"  => false
+//      case _     => null
+//    }
 
   trait Animal
   trait Dog extends Animal
@@ -435,3 +435,113 @@ object OptionVsNull extends App {
 // when you create Option[A], it comes with Some or None
 
 //
+
+object OptionExamples extends App {
+  val input: String = null
+
+  final case class Person(name: String, age: Int)
+
+  private val maybeString: Option[String] = Option.apply(input)
+//  new Option[] {}
+
+  // Option[A] -> A
+  // None        (fallback: A) -> fallback
+  // Some(value) (fallback: A) -> value
+  val string: String = maybeString.getOrElse("generic username")
+
+  // Option[String] => String
+  //                  (String, Int) => Person
+  val person: Person = Person(string, 32)
+  // map
+}
+
+object EitherExamples extends App {
+  // Either right-biased
+  // E or A
+  // map(A => B)
+  // .left.map(E => F)
+
+  val input: String = null
+  final case class Person(name: String, age: Int)
+
+  private val eitherString: Either[Error, String] = Right(input)
+  //  new Option[] {}
+
+  // Option[A] -> A
+  // Left(error)  (fallback: A) -> fallback
+  // Right(value) (fallback: A) -> value
+  val name: String = eitherString.getOrElse("generic username")
+
+  // Option[String] => String
+  //                  (String, Int) => Person
+  val person: Person = Person(name, 32)
+}
+
+object SimpleOption extends App {
+  final case class User(name: String)
+  final case class Account(number: Int)
+
+  def stringToInt(input: String): Option[Int] = {
+    println(s"stringToInt($input)")
+    input.toIntOption
+  }
+  // Error | User
+  def getUser(id: Int): Option[User] = {
+    println(s"getUser($id)")
+    None
+  }
+  def getUserAccount(user: User): Option[Account] = {
+    println(s"getUserAccount($user)")
+    None
+  }
+
+  // for-comprehension IS flatMaps
+  val thing: Option[Account] =
+    for {
+      input: String    <- Some("123")
+      id: Int          <- stringToInt(input)
+      user             <- getUser(id)
+      account: Account <- getUserAccount(user)
+    } yield account
+
+  val thing2: Option[Account] =
+    Some("hello")
+      .flatMap { (input: String) =>
+        stringToInt(input)
+          .flatMap { (id: Int) =>
+            getUser(id)
+              .flatMap { user =>
+                getUserAccount(user)
+                  .map { (account: Account) =>
+                    account
+                  }
+              }
+          }
+      }
+
+  println(s"thing = $thing")
+}
+
+object SimpleNull extends App {
+  final case class User(name: String)
+  final case class Account(number: Int)
+
+  // Int != Array[Int]
+  // String != User
+  // String != Option[String]
+  def stringToInt(input: String): Int     = input.toInt
+  def getUser(id: Int): User              = ???
+  def getUserAccount(user: User): Account = ???
+
+  // worry about the happy path
+  // short-circuiting
+  try {
+    val input: String    = "123"
+    val id: Int          = stringToInt(input)
+    val user: User       = getUser(id) // !!!
+    val account: Account = getUserAccount(user)
+    println(account)
+  } catch {
+    case e: Throwable => println(s"Something went wrong $e!")
+  }
+}
