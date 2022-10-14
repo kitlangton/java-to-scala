@@ -115,13 +115,13 @@ trait JsonEncoder[A] {
   def encode(a: A): String
 }
 
-object Json {
-  def toJson[A: JsonEncoder](a: A): String =
-    implicitly[JsonEncoder[A]].encode(a)
-
-  def fromJson[A: JsonDecoder](json: String): Option[A] =
-    implicitly[JsonDecoder[A]].decode(json)
-}
+//object Json {
+//  def toJson[A: JsonEncoder](a: A): String =
+//    implicitly[JsonEncoder[A]].encode(a)
+//
+//  def fromJson[A: JsonDecoder](json: String): Option[A] =
+//    implicitly[JsonDecoder[A]].decode(json)
+//}
 
 trait Show[A] {
   def show(a: A): String
@@ -279,6 +279,14 @@ object Monoid extends App {
         }
     }
 
+  // function monoid
+  implicit def functionMonoid[A]: Monoid[A => A] =
+    new Monoid[A => A] {
+      def empty: A => A = identity
+      def combine(lhs: A => A, rhs: A => A): A => A =
+        lhs andThen rhs
+    }
+
   final case class Pair[A](a1: A, a2: A) {
     def combine(implicit monoid: Monoid[A]): A =
       monoid.combine(a1, a2)
@@ -297,7 +305,7 @@ object Monoid extends App {
       case Nil     => monoid.empty
     }
 
-  def msum[A](as: List[A])(implicit monoid: Monoid[A]): A =
+  def concatAsMonoid[A](as: List[A])(implicit monoid: Monoid[A]): A =
     as.foldLeft(monoid.empty)(monoid.combine)
 
   val ints: List[Int]      = List(1, 2, 3)

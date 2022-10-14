@@ -1,7 +1,5 @@
 package course.cohort4
 
-import course.cohort4.TypeClasses.{SSN, Show}
-
 // DAY 9!!!
 object Day9 extends App {}
 

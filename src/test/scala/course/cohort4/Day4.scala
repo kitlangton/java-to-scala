@@ -1,5 +1,7 @@
 package course.cohort4
 
+import zio.ZIO
+
 object Day4 extends App {
 
   val double = (x: Int) => x * 2
@@ -283,6 +285,13 @@ object PredicateStuff extends App {
   // contravariant in that type
   //     A <: B
   //  P[B] <: P[A]
+
+  // () => A
+  //       A => B
+  //              B
+  //
+  //    B => A
+  //         A => ()
   case class Predicate[A](lambda: A => Boolean) extends (A => Boolean) {
 
     override def apply(input: A): Boolean =
@@ -393,6 +402,8 @@ object Questions extends App {
 //  case class Malamute(override val name: String, size: Int) extends Dog(name)
 //  val georgy: Dog = new Malamute("Georgy", 100)
 
+//  ZIO.interruptibleMask()
+//  ZIO.fail("e").tapDefect(_ => ZIO.unit)
   def add(x: Int, y: Int): Int =
     x + y
 
@@ -405,5 +416,4 @@ object Questions extends App {
 
   println(add10)
   println(add10(20))
-
 }
